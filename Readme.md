@@ -1,7 +1,7 @@
 # Личный проект «Что посмотреть» [![Build status][travis-image]][travis-url]
 
 * Студент: [Антон Ливеров](https://up.htmlacademy.ru/react/6/user/142124).
-* Наставник: `Неизвестно`.
+* Наставник: [Константин Антонов](https://htmlacademy.ru/profile/id175216).
 
 ---
 
