@@ -2,8 +2,7 @@ import React from "react";
 import PropTypes from 'prop-types';
 import MovieCard from "../moviecard/movie-card";
 
-const Homepage = (props) => {
-  const {movie} = props;
+const HomePage = ({movie}) => {
   const countCards = Array.from(Array(20));
   return <React.Fragment>
     <section className="movie-card">
@@ -124,7 +123,7 @@ const Homepage = (props) => {
   </React.Fragment>;
 };
 
-Homepage.propTypes = {
+HomePage.propTypes = {
   movie: PropTypes.shape({
     title: PropTypes.string.isRequired,
     genre: PropTypes.string,
@@ -132,4 +131,4 @@ Homepage.propTypes = {
   }),
 };
 
-export default Homepage;
+export default HomePage;
