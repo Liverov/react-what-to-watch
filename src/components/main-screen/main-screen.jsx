@@ -1,10 +1,10 @@
-import React from "react";
+import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
-import MovieCard from "../moviecard/movie-card";
+import MovieCard from '../movie-card/movie-card';
 
-const HomePage = ({movie}) => {
-  const countCards = Array.from(Array(20));
-  return <React.Fragment>
+const MainScreen = ({movie}) => {
+  const countCards = Array.from(Array(8));
+  return <Fragment>
     <section className="movie-card">
       <div className="movie-card__bg">
         <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
@@ -35,10 +35,10 @@ const HomePage = ({movie}) => {
           </div>
 
           <div className="movie-card__desc">
-            <h2 className="movie-card__title">{movie.title}</h2>
+            <h2 className="movie-card__title">{movie.name}</h2>
             <p className="movie-card__meta">
               <span className="movie-card__genre">{movie.genre}</span>
-              <span className="movie-card__year">{movie.promoDate}</span>
+              <span className="movie-card__year">{movie.released}</span>
             </p>
 
             <div className="movie-card__buttons">
@@ -120,15 +120,15 @@ const HomePage = ({movie}) => {
         </div>
       </footer>
     </div>
-  </React.Fragment>;
+  </Fragment>;
 };
 
-HomePage.propTypes = {
+MainScreen.propTypes = {
   movie: PropTypes.shape({
-    title: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
     genre: PropTypes.string,
-    promoDate: PropTypes.number
+    released: PropTypes.number
   }),
 };
 
-export default HomePage;
+export default MainScreen;
