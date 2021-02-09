@@ -122,7 +122,7 @@ const MainScreen = ({movie}) => {
         </footer>
       </div>
     </>
-  )
+  );
 };
 
 MainScreen.propTypes = {
