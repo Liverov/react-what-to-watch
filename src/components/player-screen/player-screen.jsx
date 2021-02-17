@@ -1,11 +1,17 @@
 import React from 'react';
+import {useParams, useHistory} from 'react-router-dom';
+import {filmsPropType} from '../../props';
+import {getNormalizeTime} from '../../utils';
 
-const PlayerScreen = () => {
+const PlayerScreen = ({films}) => {
+  const {id} = useParams();
+  const history = useHistory();
+
   return (
     <div className="player">
-      <video src="#" className="player__video" poster="img/player-poster.jpg"></video>
+      <video src={films[id].video_link} className="player__video" poster={films[id].poster_image}></video>
 
-      <button type="button" className="player__exit">Exit</button>
+      <button onClick={() => history.push(`/`)} type="button" className="player__exit">Exit</button>
 
       <div className="player__controls">
         <div className="player__controls-row">
@@ -13,7 +19,7 @@ const PlayerScreen = () => {
             <progress className="player__progress" value="30" max="100"></progress>
             <div className="player__toggler" style={{left: `30%`}}>Toggler</div>
           </div>
-          <div className="player__time-value">1:30:29</div>
+          <div className="player__time-value">{getNormalizeTime(films[id].run_time)}</div>
         </div>
 
         <div className="player__controls-row">
@@ -35,6 +41,10 @@ const PlayerScreen = () => {
       </div>
     </div>
   );
+};
+
+PlayerScreen.propTypes = {
+  films: filmsPropType
 };
 
 export default PlayerScreen;

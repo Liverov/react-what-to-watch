@@ -5,6 +5,8 @@ import {
   Route
 } from 'react-router-dom';
 
+import {filmsPropType} from '../../props';
+
 import MainScreen from '../main-screen/main-screen';
 import AddReviewScreen from '../add-review-screen/add-review-screen';
 import PlayerScreen from '../player-screen/player-screen';
@@ -14,26 +16,28 @@ import MovieScreen from '../movie-screen/movie-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 
 const App = (props) => {
+  const {films} = props;
+
   return (
     <Router>
       <Switch>
         <Route exact path="/">
-          <MainScreen {...props} />
+          <MainScreen films={films} />
         </Route>
         <Route exact path="/login">
           <LoginScreen />
         </Route>
         <Route exact path="/mylist">
-          <MyListScreen />
+          <MyListScreen films={films} />
         </Route>
         <Route exact path="/films/:id">
-          <MovieScreen />
+          <MovieScreen films={films} />
         </Route>
         <Route exact path="/films/:id/review">
-          <AddReviewScreen />
+          <AddReviewScreen films={films} />
         </Route>
         <Route exact path="/player/:id">
-          <PlayerScreen />
+          <PlayerScreen films={films} />
         </Route>
         <Route>
           <NotFoundScreen />
@@ -41,6 +45,10 @@ const App = (props) => {
       </Switch>
     </Router>
   );
+};
+
+App.propTypes = {
+  films: filmsPropType
 };
 
 export default App;
