@@ -1,14 +1,21 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import MovieCard from '../movie-card/movie-card';
+import {useHistory} from 'react-router-dom';
+import {filmsPropType} from '../../props';
+import {getRandomInt} from '../../utils';
+import {RandomFilmsCount} from '../../const';
 
-const MainScreen = ({movie}) => {
-  const countCards = Array.from(Array(8));
+import MovieList from '../movie-list/movie-list';
+
+const MainScreen = ({films}) => {
+
+  const history = useHistory();
+  const randomFilm = getRandomInt(RandomFilmsCount.MIN, RandomFilmsCount.MAX);
+
   return (
     <>
       <section className="movie-card">
         <div className="movie-card__bg">
-          <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
+          <img src={films[randomFilm].background_image} alt={films[randomFilm].name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -32,24 +39,32 @@ const MainScreen = ({movie}) => {
         <div className="movie-card__wrap">
           <div className="movie-card__info">
             <div className="movie-card__poster">
-              <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327" />
+              <img src={films[randomFilm].poster_image} alt={`${films[randomFilm].name} poster`} width="218" height="327" />
             </div>
 
             <div className="movie-card__desc">
-              <h2 className="movie-card__title">{movie.name}</h2>
+              <h2 className="movie-card__title">{films[randomFilm].name}</h2>
               <p className="movie-card__meta">
-                <span className="movie-card__genre">{movie.genre}</span>
-                <span className="movie-card__year">{movie.released}</span>
+                <span className="movie-card__genre">{films[randomFilm].genre}</span>
+                <span className="movie-card__year">{films[randomFilm].released}</span>
               </p>
 
               <div className="movie-card__buttons">
-                <button className="btn btn--play movie-card__button" type="button">
+                <button
+                  onClick={() => history.push(`/player/${films[randomFilm].id}`)}
+                  className="btn btn--play movie-card__button"
+                  type="button"
+                >
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list movie-card__button" type="button">
+                <button
+                  onClick={() => history.push(`/mylist/`)}
+                  className="btn btn--list movie-card__button"
+                  type="button"
+                >
                   <svg viewBox="0 0 19 20" width="19" height="20">
                     <use xlinkHref="#add"></use>
                   </svg>
@@ -99,7 +114,7 @@ const MainScreen = ({movie}) => {
           </ul>
 
           <div className="catalog__movies-list">
-            {countCards.map((name, i) => <MovieCard key={i} />)}
+            <MovieList films={films} />
           </div>
 
           <div className="catalog__more">
@@ -126,11 +141,7 @@ const MainScreen = ({movie}) => {
 };
 
 MainScreen.propTypes = {
-  movie: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    genre: PropTypes.string,
-    released: PropTypes.number
-  }),
+  films: filmsPropType
 };
 
 export default MainScreen;
