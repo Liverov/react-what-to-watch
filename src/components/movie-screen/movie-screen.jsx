@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {useParams, useHistory, Link} from 'react-router-dom';
-import {ShowCardsOnPage} from '../../const';
 import {filmsPropType} from '../../props';
 
 import MovieCard from '../movie-card/movie-card';
@@ -15,13 +14,10 @@ const MovieScreen = ({films}) => {
 
   const switchTab = () => {
     switch (tab) {
-      case `overview`: return <MovieScreenOverview film={films[id]} />;
       case `details`: return <MovieScreenDetails film={films[id]} />;
       case `reviews`: return <MovieScreenReviews film={films[id]} />;
+      default: return <MovieScreenOverview film={films[id]} />;
     }
-
-    return tab;
-
   };
 
   return (
@@ -123,7 +119,9 @@ const MovieScreen = ({films}) => {
           <h2 className="catalog__title">More like this</h2>
 
           <div className="catalog__movies-list">
-            {films.filter((film) => films[id].genre === film.genre).map((film, i) => i < ShowCardsOnPage.RELATED ? <MovieCard key={film.id} film={film} /> : ``)}
+            {films.filter((film) => films[id].genre === film.genre).map((film) => {
+              return <MovieCard key={film.id} film={film} />;
+            })}
           </div>
         </section>
 

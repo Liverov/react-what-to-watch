@@ -1,13 +1,15 @@
 import React from 'react';
 import {filmsPropType} from '../../props';
-import {ShowCardsOnPage} from '../../const';
+import {CountCardsOnPage} from '../../const';
 
 import MovieCard from '../movie-card/movie-card';
 
 const MovieList = ({films}) => {
+  films.length = CountCardsOnPage.MAIN;
+
   return (
     <>
-      {films.map((film, i) => i < ShowCardsOnPage.MAIN ? <MovieCard key={film.id} film={film} /> : ``)}
+      {films.map((film) => <MovieCard key={film.id} film={film} />)}
     </>
   );
 };

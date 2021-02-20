@@ -3,7 +3,7 @@ export const RandomFilmsCount = {
   MIN: 0
 };
 
-export const ShowCardsOnPage = {
+export const CountCardsOnPage = {
   MAIN: 8,
   RELATED: 4
 };

@@ -58,5 +58,4 @@ AddReviewScreen.propTypes = {
   films: filmsPropType
 };
 
-
 export default AddReviewScreen;

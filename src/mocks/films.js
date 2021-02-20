@@ -151,4 +151,23 @@ export default [
     "released": 2003,
     "is_favorite": true
   },
+  {
+    "id": 8,
+    "name": `Johnny English`,
+    "poster_image": `img/johnny-english.jpg`,
+    "preview_image": `img/johnny-english.jpg`,
+    "background_image": `img/johnny-english.jpg`,
+    "background_color": `#ffffff`,
+    "video_link": `https://some-link`,
+    "preview_video_link": `https://some-link`,
+    "description": `After a sudden attack on MI5, Johnny English, Britain's most confident, yet unintelligent spy, becomes Britain's only spy.`,
+    "rating": 8.0,
+    "scores_count": 240,
+    "director": `Peter Howitt`,
+    "starring": [`Rowan Atkinson`, `John Malkovich`, `Natalie Imbruglia`],
+    "run_time": 89,
+    "genre": `Comedy`,
+    "released": 2003,
+    "is_favorite": true
+  },
 ];
