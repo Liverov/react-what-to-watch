@@ -5,11 +5,11 @@ import {CountCardsOnPage} from '../../const';
 import MovieCard from '../movie-card/movie-card';
 
 const MovieList = ({films}) => {
-  films.length = CountCardsOnPage.MAIN;
+  const shortFilms = films.slice(0, CountCardsOnPage.MAIN);
 
   return (
     <>
-      {films.map((film) => <MovieCard key={film.id} film={film} />)}
+      {shortFilms.map((film) => <MovieCard key={film.id} film={film} />)}
     </>
   );
 };
