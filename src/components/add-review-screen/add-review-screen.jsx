@@ -2,9 +2,13 @@ import React from 'react';
 import {Link, useParams} from 'react-router-dom';
 import {filmsPropType} from '../../props';
 
+import Header from '../../layout/header';
+import Avatar from '../avatar/avatar';
+
 import AddReviewForm from '../add-review-form/add-review-form';
 
 const AddReviewScreen = ({films}) => {
+
   const {id} = useParams();
 
   return (
@@ -16,15 +20,7 @@ const AddReviewScreen = ({films}) => {
 
         <h1 className="visually-hidden">WTW</h1>
 
-        <header className="page-header">
-          <div className="logo">
-            <Link to="/" className="logo__link">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </Link>
-          </div>
-
+        <Header className="page-header">
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
@@ -36,12 +32,8 @@ const AddReviewScreen = ({films}) => {
             </ul>
           </nav>
 
-          <div className="user-block">
-            <div className="user-block__avatar">
-              <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-            </div>
-          </div>
-        </header>
+          <Avatar />
+        </Header>
 
         <div className="movie-card__poster movie-card__poster--small">
           <img src={films[id].poster_image} alt={`${films[id].name} poster`} width="218" height="327" />
