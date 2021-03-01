@@ -2,11 +2,9 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes from "prop-types";
 
-const Header = (props) => {
-  const {setClassName = ``} = props;
-
+const Header = ({setClassName = ``, children}) => {
   return (
-    <header className={`page-header ` + setClassName}>
+    <header className={`page-header ${setClassName}`}>
       <div className="logo">
         <Link to="/" className="logo__link">
           <span className="logo__letter logo__letter--1">W</span>
@@ -15,7 +13,7 @@ const Header = (props) => {
         </Link>
       </div>
 
-      {props.children}
+      {children}
     </header>
   );
 };

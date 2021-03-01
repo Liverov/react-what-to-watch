@@ -12,24 +12,15 @@ const MovieCard = ({film}) => {
     <>
       <article className="small-movie-card catalog__movies-card">
         <div
-          onMouseEnter={() => setIsPlaying(isPlaying = true)}
-          onMouseOut={() => setIsPlaying(isPlaying = false)}
-          onClick={() => history.push(`/films/` + film.id)}
+          onMouseEnter={() => setIsPlaying(true)}
+          onMouseOut={() => setIsPlaying(false)}
+          onClick={() => history.push(`/films/${film.id}`)}
           className="small-movie-card__image"
         >
-          {isPlaying ?
-            <Player film={film} isPlaying={isPlaying}/>
-            :
-            <img
-              src={film.preview_image}
-              alt={film.name}
-              width="280"
-              height="175"
-            />
-          }
+          <Player film={film} isPlaying={isPlaying} />
         </div>
         <h3 className="small-movie-card__title">
-          <Link to={`/films/` + film.id}
+          <Link to={`/films/${film.id}`}
             className="small-movie-card__link"
           >
             {film.name}
