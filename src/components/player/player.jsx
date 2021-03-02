@@ -20,9 +20,7 @@ const Player = ({film, isPlaying, isMuted = true}) => {
 
   }, [isPlaying]);
 
-  return (
-    <video src={film.video_link} className="player__video" poster={film.poster_image} ref={videoRef} muted={isMuted}></video>
-  );
+  return <video src={film.videoLink} className="player__video" poster={film.posterImage} ref={videoRef} muted={isMuted}></video>;
 };
 
 Player.propTypes = {

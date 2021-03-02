@@ -7,9 +7,16 @@ const PlayerScreen = ({films}) => {
   const {id} = useParams();
   const history = useHistory();
 
+  const {
+    posterImage,
+    videoLink,
+    runTime,
+
+  } = films[id];
+
   return (
     <div className="player">
-      <video src={films[id].video_link} className="player__video" poster={films[id].poster_image}></video>
+      <video src={videoLink} className="player__video" poster={posterImage}></video>
 
       <button onClick={() => history.push(`/`)} type="button" className="player__exit">Exit</button>
 
@@ -19,7 +26,7 @@ const PlayerScreen = ({films}) => {
             <progress className="player__progress" value="30" max="100"></progress>
             <div className="player__toggler" style={{left: `30%`}}>Toggler</div>
           </div>
-          <div className="player__time-value">{getNormalizeTime(films[id].run_time)}</div>
+          <div className="player__time-value">{getNormalizeTime(runTime)}</div>
         </div>
 
         <div className="player__controls-row">
