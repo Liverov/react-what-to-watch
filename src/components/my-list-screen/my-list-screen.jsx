@@ -1,29 +1,18 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
 import {filmsPropType} from '../../props';
 
+import Header from '../../layout/header';
+import Avatar from '../avatar/avatar';
 import MovieCard from '../movie-card/movie-card';
+import Footer from '../../layout/footer';
 
 const MyListScreen = ({films}) => {
   return (
     <div className="user-page">
-      <header className="page-header user-page__head">
-        <div className="logo">
-          <Link to="/" className="logo__link">
-            <span className="logo__letter logo__letter--1">W</span>
-            <span className="logo__letter logo__letter--2">T</span>
-            <span className="logo__letter logo__letter--3">W</span>
-          </Link>
-        </div>
-
+      <Header setClassName="user-page__head">
         <h1 className="page-title user-page__title">My list</h1>
-
-        <div className="user-block">
-          <div className="user-block__avatar">
-            <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-          </div>
-        </div>
-      </header>
+        <Avatar />
+      </Header>
 
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
@@ -33,19 +22,7 @@ const MyListScreen = ({films}) => {
         </div>
       </section>
 
-      <footer className="page-footer">
-        <div className="logo">
-          <a href="main.html" className="logo__link logo__link--light">
-            <span className="logo__letter logo__letter--1">W</span>
-            <span className="logo__letter logo__letter--2">T</span>
-            <span className="logo__letter logo__letter--3">W</span>
-          </a>
-        </div>
-
-        <div className="copyright">
-          <p>© 2019 What to watch Ltd.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };

@@ -2,28 +2,25 @@ import React, {useState} from 'react';
 import {useHistory, Link} from 'react-router-dom';
 import {filmPropType} from '../../props';
 
-const MovieCard = ({film}) => {
+import Player from '../player/player';
 
-  let [filmId, setFilmId] = useState(0);
+const MovieCard = ({film}) => {
   const history = useHistory();
+  let [isPlaying, setIsPlaying] = useState(false);
 
   return (
     <>
       <article className="small-movie-card catalog__movies-card">
         <div
-          onMouseEnter={() => setFilmId(filmId = film.id)}
-          onClick={() => history.push(`/films/` + film.id)}
+          onMouseEnter={() => setIsPlaying(true)}
+          onMouseOut={() => setIsPlaying(false)}
+          onClick={() => history.push(`/films/${film.id}`)}
           className="small-movie-card__image"
         >
-          <img
-            src={film.preview_image}
-            alt={film.name}
-            width="280"
-            height="175"
-          />
+          <Player film={film} isPlaying={isPlaying} />
         </div>
         <h3 className="small-movie-card__title">
-          <Link to={`/films/` + filmId}
+          <Link to={`/films/${film.id}`}
             className="small-movie-card__link"
           >
             {film.name}
