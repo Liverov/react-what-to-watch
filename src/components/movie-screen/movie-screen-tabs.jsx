@@ -27,9 +27,9 @@ const Tabs = ({film}) => {
       <nav className="movie-nav movie-card__nav">
         <ul className="movie-nav__list">
           {
-            TABS.map((tabItem) =>
+            TABS.map((tabItem, index) =>
               <li
-                key={tabItem}
+                key={index}
                 className={`movie-nav__item ${tab === tabItem && `movie-nav__item--active`}`}
               >
                 <a
