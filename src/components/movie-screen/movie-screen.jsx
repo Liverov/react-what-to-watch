@@ -1,34 +1,39 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useParams, useHistory, Link} from 'react-router-dom';
 import {filmsPropType} from '../../props';
 
 import Header from '../../layout/header';
 import Avatar from '../avatar/avatar';
 import MovieCard from '../movie-card/movie-card';
-import MovieScreenOverview from './movie-screen-overview';
-import MovieScreenDetails from './movie-screen-details';
-import MovieScreenReviews from './movie-screen-reviews';
+import Tabs from './movie-screen-tabs';
 import Footer from '../../layout/footer';
 
-const MovieScreen = ({films}) => {
+import films from '../../mocks/films';
+
+const MovieScreen = () => {
   const {id} = useParams();
   const history = useHistory();
-  let [tab, setTab] = useState(`overview`);
+  const [film, setFilm] = useState({});
 
-  const switchTab = () => {
-    switch (tab) {
-      case `details`: return <MovieScreenDetails film={films[id]} />;
-      case `reviews`: return <MovieScreenReviews film={films[id]} />;
-      default: return <MovieScreenOverview film={films[id]} />;
-    }
-  };
+  const {
+    filmId,
+    name,
+    genre,
+    released,
+    posterImage,
+    backgroundImage
+  } = film;
+
+  useEffect(() => {
+    setFilm(films[id]);
+  }, []);
 
   return (
     <>
       <section className="movie-card movie-card--full">
         <div className="movie-card__hero">
           <div className="movie-card__bg">
-            <img src={films[id].background_image} alt={films[id].name} />
+            <img src={backgroundImage} alt={name} />
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -39,15 +44,15 @@ const MovieScreen = ({films}) => {
 
           <div className="movie-card__wrap">
             <div className="movie-card__desc">
-              <h2 className="movie-card__title">{films[id].name}</h2>
+              <h2 className="movie-card__title">{name}</h2>
               <p className="movie-card__meta">
-                <span className="movie-card__genre">{films[id].genre}</span>
-                <span className="movie-card__year">{films[id].released}</span>
+                <span className="movie-card__genre">{genre}</span>
+                <span className="movie-card__year">{released}</span>
               </p>
 
               <div className="movie-card__buttons">
                 <button
-                  onClick={() => history.push(`/player/${films[id].id}`)}
+                  onClick={() => history.push(`/player/${filmId}`)}
                   className="btn btn--play movie-card__button"
                   type="button"
                 >
@@ -67,7 +72,7 @@ const MovieScreen = ({films}) => {
                   <span>My list</span>
                 </button>
                 <Link
-                  to={`/films/${films[id].id}/review`}
+                  to={`/films/${filmId}/review`}
                   className="btn movie-card__button"
                 >
                   Add review
@@ -80,27 +85,10 @@ const MovieScreen = ({films}) => {
         <div className="movie-card__wrap movie-card__translate-top">
           <div className="movie-card__info">
             <div className="movie-card__poster movie-card__poster--big">
-              <img src={films[id].poster_image} alt={films[id].name} width="218" height="327" />
+              <img src={posterImage} alt={name} width="218" height="327" />
             </div>
 
-            <div className="movie-card__desc">
-              <nav className="movie-nav movie-card__nav">
-                <ul className="movie-nav__list">
-                  <li className={`movie-nav__item ${tab === `overview` ? `movie-nav__item--active` : ``}`}>
-                    <a onClick={() => setTab(tab = `overview`)} className="movie-nav__link">Overview</a>
-                  </li>
-                  <li className={`movie-nav__item ${tab === `details` ? `movie-nav__item--active` : ``}`}>
-                    <a onClick={() => setTab(tab = `details`)} className="movie-nav__link">Details</a>
-                  </li>
-                  <li className={`movie-nav__item ${tab === `reviews` ? `movie-nav__item--active` : ``}`}>
-                    <a onClick={() => setTab(tab = `reviews`)} className="movie-nav__link">Reviews</a>
-                  </li>
-                </ul>
-              </nav>
-
-              {switchTab(tab)}
-
-            </div>
+            <Tabs film={films[id]} />
           </div>
         </div>
       </section>
@@ -110,9 +98,7 @@ const MovieScreen = ({films}) => {
           <h2 className="catalog__title">More like this</h2>
 
           <div className="catalog__movies-list">
-            {films.filter((film) => films[id].genre === film.genre).map((film) => {
-              return <MovieCard key={film.id} film={film} />;
-            })}
+            {films.filter((relatedFilm) => genre === relatedFilm.genre).map((relatedFilm) => <MovieCard key={relatedFilm.filmId} film={relatedFilm} />)}
           </div>
         </section>
 

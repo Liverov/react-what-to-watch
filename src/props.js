@@ -3,7 +3,7 @@ import PropTypes, {shape} from 'prop-types';
 export const filmsPropType = PropTypes.array;
 
 export const filmPropType = PropTypes.shape({
-  id: PropTypes.number,
+  filmId: PropTypes.number,
   name: PropTypes.string,
   posterImage: PropTypes.string,
   previewImage: PropTypes.string,

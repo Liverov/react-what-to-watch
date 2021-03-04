@@ -8,7 +8,7 @@ const MovieList = ({films}) => {
   const shortFilms = films.slice(0, CountCardsOnPage.MAIN);
   return (
     <>
-      {shortFilms.map((film) => <MovieCard key={film.id} film={film} />)}
+      {shortFilms.map((film) => <MovieCard key={film.filmId} film={film} />)}
     </>
   );
 };

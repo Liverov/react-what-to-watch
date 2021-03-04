@@ -1,17 +1,30 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {useParams, useHistory} from 'react-router-dom';
 import {filmsPropType} from '../../props';
 import {getNormalizeTime} from '../../utils';
 
-const PlayerScreen = ({films}) => {
+import films from '../../mocks/films';
+
+const PlayerScreen = () => {
   const {id} = useParams();
   const history = useHistory();
+  const [film, setFilm] = useState({});
+
+  const {
+    posterImage,
+    videoLink,
+    runTime,
+  } = film;
+
+  useEffect(() => {
+    setFilm(films[id]);
+  }, []);
 
   return (
     <div className="player">
-      <video src={films[id].video_link} className="player__video" poster={films[id].poster_image}></video>
+      <video src={videoLink} className="player__video" poster={posterImage}></video>
 
-      <button onClick={() => history.push(`/`)} type="button" className="player__exit">Exit</button>
+      <button onClick={() => history.goBack()} type="button" className="player__exit">Exit</button>
 
       <div className="player__controls">
         <div className="player__controls-row">
@@ -19,7 +32,7 @@ const PlayerScreen = ({films}) => {
             <progress className="player__progress" value="30" max="100"></progress>
             <div className="player__toggler" style={{left: `30%`}}>Toggler</div>
           </div>
-          <div className="player__time-value">{getNormalizeTime(films[id].run_time)}</div>
+          <div className="player__time-value">{getNormalizeTime(runTime)}</div>
         </div>
 
         <div className="player__controls-row">

@@ -11,11 +11,21 @@ const MainScreen = ({films}) => {
   const history = useHistory();
   const randomFilm = getRandomInt(RandomFilmsCount.MIN, RandomFilmsCount.MAX);
 
+  const {
+    filmId,
+    name,
+    backgroundImage,
+    posterImage,
+    genre,
+    released,
+
+  } = films[randomFilm];
+
   return (
     <>
       <section className="movie-card">
         <div className="movie-card__bg">
-          <img src={films[randomFilm].background_image} alt={films[randomFilm].name} />
+          <img src={backgroundImage} alt={name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -39,19 +49,19 @@ const MainScreen = ({films}) => {
         <div className="movie-card__wrap">
           <div className="movie-card__info">
             <div className="movie-card__poster">
-              <img src={films[randomFilm].poster_image} alt={`${films[randomFilm].name} poster`} width="218" height="327" />
+              <img src={posterImage} alt={`${name} poster`} width="218" height="327" />
             </div>
 
             <div className="movie-card__desc">
-              <h2 className="movie-card__title">{films[randomFilm].name}</h2>
+              <h2 className="movie-card__title">{name}</h2>
               <p className="movie-card__meta">
-                <span className="movie-card__genre">{films[randomFilm].genre}</span>
-                <span className="movie-card__year">{films[randomFilm].released}</span>
+                <span className="movie-card__genre">{genre}</span>
+                <span className="movie-card__year">{released}</span>
               </p>
 
               <div className="movie-card__buttons">
                 <button
-                  onClick={() => history.push(`/player/${films[randomFilm].id}`)}
+                  onClick={() => history.push(`/player/${filmId}`)}
                   className="btn btn--play movie-card__button"
                   type="button"
                 >
