@@ -1,21 +1,28 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link, useParams} from 'react-router-dom';
 import {filmsPropType} from '../../props';
 
+import films from '../../mocks/films';
+
 import Header from '../../layout/header';
 import Avatar from '../avatar/avatar';
-
 import AddReviewForm from '../add-review-form/add-review-form';
 
-const AddReviewScreen = ({films}) => {
+
+const AddReviewScreen = () => {
   const {id} = useParams();
+  const [film, setFilm] = useState({});
 
   const {
     filmId,
     backgroundImage,
     name,
     posterImage,
-  } = films[id];
+  } = film;
+
+  useEffect(() => {
+    setFilm(films[id]);
+  }, []);
 
   return (
     <section className="movie-card movie-card--full">

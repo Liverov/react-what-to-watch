@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {useParams, useHistory, Link} from 'react-router-dom';
 import {filmsPropType} from '../../props';
 
@@ -8,9 +8,13 @@ import MovieCard from '../movie-card/movie-card';
 import Tabs from './movie-screen-tabs';
 import Footer from '../../layout/footer';
 
-const MovieScreen = ({films}) => {
+import films from '../../mocks/films';
+
+const MovieScreen = () => {
   const {id} = useParams();
   const history = useHistory();
+  const [film, setFilm] = useState({});
+
   const {
     filmId,
     name,
@@ -18,7 +22,11 @@ const MovieScreen = ({films}) => {
     released,
     posterImage,
     backgroundImage
-  } = films[id];
+  } = film;
+
+  useEffect(() => {
+    setFilm(films[id]);
+  }, []);
 
   return (
     <>

@@ -6,8 +6,8 @@ import MovieScreenDetails from './movie-screen-details/movie-screen-details';
 import MovieScreenReviews from './movie-screen-reviews/movie-screen-reviews';
 
 const Tabs = ({film}) => {
-  let [tab, setTab] = useState(`overview`);
-  const switchTab = () => {
+  const [tab, setTab] = useState(`overview`);
+  const getScreen = () => {
     switch (tab) {
       case `details`: return <MovieScreenDetails film={film} />;
       case `reviews`: return <MovieScreenReviews film={film} />;
@@ -20,18 +20,18 @@ const Tabs = ({film}) => {
       <nav className="movie-nav movie-card__nav">
         <ul className="movie-nav__list">
           <li className={`movie-nav__item ${tab === `overview` ? `movie-nav__item--active` : ``}`}>
-            <a onClick={() => setTab(tab = `overview`)} className="movie-nav__link">Overview</a>
+            <a onClick={() => setTab(`overview`)} className="movie-nav__link">Overview</a>
           </li>
           <li className={`movie-nav__item ${tab === `details` ? `movie-nav__item--active` : ``}`}>
-            <a onClick={() => setTab(tab = `details`)} className="movie-nav__link">Details</a>
+            <a onClick={() => setTab(`details`)} className="movie-nav__link">Details</a>
           </li>
           <li className={`movie-nav__item ${tab === `reviews` ? `movie-nav__item--active` : ``}`}>
-            <a onClick={() => setTab(tab = `reviews`)} className="movie-nav__link">Reviews</a>
+            <a onClick={() => setTab(`reviews`)} className="movie-nav__link">Reviews</a>
           </li>
         </ul>
       </nav>
 
-      {switchTab(tab)}
+      {getScreen(tab)}
     </div>
   );
 };

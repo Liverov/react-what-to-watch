@@ -1,24 +1,30 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {useParams, useHistory} from 'react-router-dom';
 import {filmsPropType} from '../../props';
 import {getNormalizeTime} from '../../utils';
 
-const PlayerScreen = ({films}) => {
+import films from '../../mocks/films';
+
+const PlayerScreen = () => {
   const {id} = useParams();
   const history = useHistory();
+  const [film, setFilm] = useState({});
 
   const {
     posterImage,
     videoLink,
     runTime,
+  } = film;
 
-  } = films[id];
+  useEffect(() => {
+    setFilm(films[id]);
+  }, []);
 
   return (
     <div className="player">
       <video src={videoLink} className="player__video" poster={posterImage}></video>
 
-      <button onClick={() => history.push(`/`)} type="button" className="player__exit">Exit</button>
+      <button onClick={() => history.goBack()} type="button" className="player__exit">Exit</button>
 
       <div className="player__controls">
         <div className="player__controls-row">

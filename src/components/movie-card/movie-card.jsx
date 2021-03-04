@@ -6,7 +6,7 @@ import Player from '../player/player';
 
 const MovieCard = ({film}) => {
   const history = useHistory();
-  let [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   return (
     <>
