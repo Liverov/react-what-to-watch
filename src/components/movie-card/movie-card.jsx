@@ -7,7 +7,6 @@ import Player from '../player/player';
 const MovieCard = ({film}) => {
   const history = useHistory();
   const [isPlaying, setIsPlaying] = useState(false);
-
   return (
     <>
       <article className="small-movie-card catalog__movies-card">

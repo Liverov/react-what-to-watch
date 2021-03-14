@@ -1,6 +1,6 @@
 import React from 'react';
 import {filmPropType, reviewsPropType} from '../../../props';
-import {getRandomInt} from '../../../utils';
+import {getRandomInt} from '../../../utils/utils';
 import reviews from '../../../mocks/reviews';
 
 const MovieScreenReviews = ({film}) => {
