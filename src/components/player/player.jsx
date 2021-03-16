@@ -1,6 +1,6 @@
 import React, {useRef, useEffect} from 'react';
 import PropTypes from "prop-types";
-import {filmPropType} from '../../props';
+import {filmPropType} from '../../types';
 
 const Player = ({film, isPlaying, isMuted = true}) => {
   const videoRef = useRef();

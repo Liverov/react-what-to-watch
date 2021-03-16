@@ -1,17 +1,13 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {connect} from "react-redux";
-import {filmsPropType, genrePropType, getFilmsByGenrePropType} from '../../props';
-import {CountCardsOnPage} from '../../const';
-import * as actions from "../../actions/actions";
+import {filmsPropType, genrePropType} from '../../types';
+import {CountCardsOnPage, FILTER_DEFAULT} from '../../const';
 
 import MovieCard from '../movie-card/movie-card';
 
-const MovieList = ({films, sortedFilms, genre, getFilmsByGenre}) => {
-  const mainPageList = sortedFilms.slice(0, CountCardsOnPage.MAIN);
-
-  useEffect(() => {
-    getFilmsByGenre(films, genre);
-  }, [genre]);
+const MovieList = ({films, genre}) => {
+  let mainPageList = films.slice(0, CountCardsOnPage.MAIN);
+  mainPageList = genre !== FILTER_DEFAULT ? mainPageList.filter((item) => item.genre === genre) : mainPageList;
 
   return (
     <>
@@ -22,16 +18,9 @@ const MovieList = ({films, sortedFilms, genre, getFilmsByGenre}) => {
 
 MovieList.propTypes = {
   films: filmsPropType,
-  sortedFilms: filmsPropType,
-  genre: genrePropType,
-  getFilmsByGenre: getFilmsByGenrePropType
+  genre: genrePropType
 };
 
-const mapStateToProps = (state) => ({
-  genre: state.genre,
-  films: state.films,
-  sortedFilms: state.sortedFilms
-});
-
+const mapStateToProps = ({genre, films}) => ({genre, films});
 export {MovieList};
-export default connect(mapStateToProps, actions)(MovieList);
+export default connect(mapStateToProps, null)(MovieList);

@@ -1,5 +1,5 @@
 import React from 'react';
-import {filmsPropType} from '../../props';
+import {filmsPropType} from '../../types';
 
 import Header from '../../layout/header';
 import Avatar from '../avatar/avatar';

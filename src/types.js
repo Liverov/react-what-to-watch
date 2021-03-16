@@ -34,6 +34,4 @@ export const reviewsPropType = PropTypes.shape({
 });
 
 export const genrePropType = PropTypes.string;
-export const getFilmsByGenrePropType = PropTypes.func.isRequired;
 export const changeGenrePropType = PropTypes.func.isRequired;
-export const resetGenrePropType = PropTypes.func.isRequired;

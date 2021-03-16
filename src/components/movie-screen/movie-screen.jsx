@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {useParams, useHistory, Link} from 'react-router-dom';
-import {filmsPropType} from '../../props';
+import {filmsPropType} from '../../types';
 
 import Header from '../../layout/header';
 import Avatar from '../avatar/avatar';

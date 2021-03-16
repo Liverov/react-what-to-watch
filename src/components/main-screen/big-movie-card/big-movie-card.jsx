@@ -1,6 +1,6 @@
 import React from 'react';
 import {useHistory} from 'react-router-dom';
-import {filmsPropType} from '../../../props';
+import {filmsPropType} from '../../../types';
 
 import Header from "../../../layout/header";
 import Avatar from "../../avatar/avatar";
@@ -8,7 +8,8 @@ import {getRandomInt} from "../../../utils/utils";
 import {connect} from "react-redux";
 
 const BigMovieCard = ({films}) => {
-  const randomFilm = getRandomInt(0, films.length - 1);
+  const randomFilm = getRandomInt({max: films.length - 1});
+
   const history = useHistory();
   const {
     filmId,

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useHistory, Link} from 'react-router-dom';
-import {filmPropType} from '../../props';
+import {filmPropType} from '../../types';
 
 import Player from '../player/player';
 
