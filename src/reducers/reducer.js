@@ -1,8 +1,9 @@
 import {ActionType} from "../actions/actions";
 import films from '../mocks/films';
+import {FILTER_DEFAULT} from "../const";
 
 const initialState = {
-  genre: `All genres`,
+  genre: FILTER_DEFAULT,
   films
 };
 
