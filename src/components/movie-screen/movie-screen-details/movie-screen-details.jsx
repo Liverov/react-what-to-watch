@@ -1,6 +1,6 @@
 import React from 'react';
-import {filmPropType} from '../../../props';
-import {getNormalizeTime} from '../../../utils';
+import {filmPropType} from '../../../types';
+import {getNormalizeTime} from '../../../utils/utils';
 
 const MovieScreenDetails = ({film}) => {
 

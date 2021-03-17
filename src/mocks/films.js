@@ -153,7 +153,7 @@ export default [
   },
   {
     "filmId": 8,
-    "name": `Johnny English`,
+    "name": `Test film`,
     "posterImage": `img/johnny-english.jpg`,
     "previewImage": `img/johnny-english.jpg`,
     "backgroundImage": `img/johnny-english.jpg`,

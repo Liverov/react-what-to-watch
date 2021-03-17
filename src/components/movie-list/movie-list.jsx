@@ -1,20 +1,31 @@
 import React from 'react';
-import {filmsPropType} from '../../props';
+import {connect} from "react-redux";
+import {filmsPropType, genrePropType} from '../../types';
 import {CountCardsOnPage} from '../../const';
+import {prepareFilmsByGenre} from '../../utils/utils';
 
 import MovieCard from '../movie-card/movie-card';
 
 const MovieList = ({films}) => {
-  const shortFilms = films.slice(0, CountCardsOnPage.MAIN);
+  let mainPageList = films.slice(0, CountCardsOnPage.MAIN);
+
   return (
     <>
-      {shortFilms.map((film) => <MovieCard key={film.filmId} film={film} />)}
+      {mainPageList.map((film) => <MovieCard key={film.filmId} film={film} />)}
     </>
   );
 };
 
 MovieList.propTypes = {
-  films: filmsPropType
+  films: filmsPropType,
+  genre: genrePropType
 };
 
-export default MovieList;
+const mapStateToProps = ({films, genre}) => {
+  return {
+    films: prepareFilmsByGenre({films, genre}),
+    genre
+  };
+};
+export {MovieList};
+export default connect(mapStateToProps, null)(MovieList);

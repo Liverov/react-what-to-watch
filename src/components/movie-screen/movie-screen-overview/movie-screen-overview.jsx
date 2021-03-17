@@ -1,5 +1,5 @@
 import React from 'react';
-import {filmPropType} from '../../../props';
+import {filmPropType} from '../../../types';
 
 const MovieScreenOverview = ({film}) => {
 

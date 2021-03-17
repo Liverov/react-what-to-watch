@@ -1,13 +1,12 @@
 import React, {useState} from 'react';
 import {useHistory, Link} from 'react-router-dom';
-import {filmPropType} from '../../props';
+import {filmPropType} from '../../types';
 
 import Player from '../player/player';
 
 const MovieCard = ({film}) => {
   const history = useHistory();
   const [isPlaying, setIsPlaying] = useState(false);
-
   return (
     <>
       <article className="small-movie-card catalog__movies-card">

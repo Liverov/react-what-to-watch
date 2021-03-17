@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {useParams, useHistory} from 'react-router-dom';
-import {filmsPropType} from '../../props';
-import {getNormalizeTime} from '../../utils';
+import {filmsPropType} from '../../types';
+import {getNormalizeTime} from '../../utils/utils';
 
 import films from '../../mocks/films';
 

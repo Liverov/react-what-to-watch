@@ -32,3 +32,6 @@ export const reviewsPropType = PropTypes.shape({
   comment: PropTypes.string,
   date: PropTypes.string
 });
+
+export const genrePropType = PropTypes.string;
+export const changeGenrePropType = PropTypes.func.isRequired;

@@ -7,3 +7,6 @@ export const CountCardsOnPage = {
   MAIN: 8,
   RELATED: 4
 };
+
+export const FILTER_DEFAULT = `All genres`;
+
