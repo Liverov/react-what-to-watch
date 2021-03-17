@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {filmsPropType, changeGenrePropType} from "../../types";
 import {FILTER_DEFAULT} from '../../const';
 
-import {ActionReducer} from "../../actions/actions";
+import {ActionCreator} from "../../actions/actions";
 
 const GenresList = ({films, changeGenre}) => {
   const originalGenres = [FILTER_DEFAULT, ...new Set(films.map((film) => film.genre))];
@@ -35,7 +35,7 @@ GenresList.propTypes = {
 const mapStateToProps = ({films}) => ({films});
 const mapDispatchToProps = (dispatch) => ({
   changeGenre(item) {
-    dispatch(ActionReducer.changeGenre(item));
+    dispatch(ActionCreator.changeGenre(item));
   }
 });
 

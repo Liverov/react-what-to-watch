@@ -1,13 +1,13 @@
 import React from 'react';
 import {connect} from "react-redux";
 import {filmsPropType, genrePropType} from '../../types';
-import {CountCardsOnPage, FILTER_DEFAULT} from '../../const';
+import {CountCardsOnPage} from '../../const';
+import {prepareFilmsByGenre} from '../../utils/utils';
 
 import MovieCard from '../movie-card/movie-card';
 
-const MovieList = ({films, genre}) => {
+const MovieList = ({films}) => {
   let mainPageList = films.slice(0, CountCardsOnPage.MAIN);
-  mainPageList = genre !== FILTER_DEFAULT ? mainPageList.filter((item) => item.genre === genre) : mainPageList;
 
   return (
     <>
@@ -21,6 +21,11 @@ MovieList.propTypes = {
   genre: genrePropType
 };
 
-const mapStateToProps = ({genre, films}) => ({genre, films});
+const mapStateToProps = ({films, genre}) => {
+  return {
+    films: prepareFilmsByGenre({films, genre}),
+    genre
+  };
+};
 export {MovieList};
 export default connect(mapStateToProps, null)(MovieList);

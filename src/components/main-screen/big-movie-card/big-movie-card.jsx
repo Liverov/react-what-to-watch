@@ -78,9 +78,7 @@ BigMovieCard.propTypes = {
   films: filmsPropType
 };
 
-const mapStateToProps = (state) => ({
-  films: state.films
-});
+const mapStateToProps = ({films}) => ({films});
 
 export {BigMovieCard};
 export default connect(mapStateToProps, null)(BigMovieCard);
