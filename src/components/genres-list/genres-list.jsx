@@ -1,12 +1,23 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
-import {filmsPropType, changeGenrePropType} from "../../types";
+import {
+  filmsPropType,
+  changeGenrePropType,
+  genrePropType,
+  resetCountCardsPropType,
+} from "../../types";
 import {FILTER_DEFAULT} from '../../const';
 
 import {ActionCreator} from "../../actions/actions";
 
-const GenresList = ({films, changeGenre}) => {
+const GenresList = ({films, changeGenre, resetCountCards, genre}) => {
   const originalGenres = [FILTER_DEFAULT, ...new Set(films.map((film) => film.genre))];
+
+  useEffect(() => {
+    return () => {
+      resetCountCards();
+    };
+  }, [genre]);
 
   return (
     <ul className="catalog__genres-list">
@@ -29,13 +40,18 @@ const GenresList = ({films, changeGenre}) => {
 
 GenresList.propTypes = {
   films: filmsPropType,
-  changeGenre: changeGenrePropType
+  changeGenre: changeGenrePropType,
+  genre: genrePropType,
+  resetCountCards: resetCountCardsPropType
 };
 
-const mapStateToProps = ({films}) => ({films});
+const mapStateToProps = ({films, genre}) => ({films, genre});
 const mapDispatchToProps = (dispatch) => ({
   changeGenre(item) {
     dispatch(ActionCreator.changeGenre(item));
+  },
+  resetCountCards() {
+    dispatch(ActionCreator.resetCountCards());
   }
 });
 

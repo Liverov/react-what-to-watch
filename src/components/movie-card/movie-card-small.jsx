@@ -4,7 +4,7 @@ import {filmPropType} from '../../types';
 
 import Player from '../player/player';
 
-const MovieCard = ({film}) => {
+const MovieCardSmall = ({film}) => {
   const history = useHistory();
   const [isPlaying, setIsPlaying] = useState(false);
   return (
@@ -30,8 +30,8 @@ const MovieCard = ({film}) => {
   );
 };
 
-MovieCard.propTypes = {
+MovieCardSmall.propTypes = {
   film: filmPropType
 };
 
-export default MovieCard;
+export default MovieCardSmall;
