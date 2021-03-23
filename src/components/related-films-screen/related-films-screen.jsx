@@ -1,7 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
-import {CountCardsOnPage} from "../../const";
-import MovieCardSmall from "../movie-card/movie-card-small";
+import {COUNT_RELATED_CARDS} from "../../const";
+import MovieCard from "../movie-card/movie-card";
 import {filmsPropType, genrePropType} from "../../types";
 
 const RelatedFilmsScreen = ({films, genre}) => {
@@ -12,8 +12,8 @@ const RelatedFilmsScreen = ({films, genre}) => {
       <div className="catalog__movies-list">
         {
           films.filter((relatedFilm) => genre === relatedFilm.genre)
-            .slice(0, CountCardsOnPage.RELATED)
-            .map((film) => <MovieCardSmall key={film.filmId} film={film} />)
+            .slice(0, COUNT_RELATED_CARDS)
+            .map((film) => <MovieCard key={film.filmId} film={film} />)
         }
       </div>
     </section>

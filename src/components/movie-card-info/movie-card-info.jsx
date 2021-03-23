@@ -1,7 +1,8 @@
 import React from 'react';
 import {useHistory} from "react-router-dom";
 
-const movieCardDesc = ({name, genre, released, filmId, children}) => {
+const MovieCardInfo = (film) => {
+  const {name, genre, released, filmId, children} = film;
   const history = useHistory();
   return (
     <div className="movie-card__desc">
@@ -38,4 +39,4 @@ const movieCardDesc = ({name, genre, released, filmId, children}) => {
   );
 };
 
-export default movieCardDesc;
+export default MovieCardInfo;

@@ -35,6 +35,4 @@ export const reviewsPropType = PropTypes.shape({
 
 export const genrePropType = PropTypes.string;
 export const changeGenrePropType = PropTypes.func.isRequired;
-export const countCardsOnPagePropType = PropTypes.number;
-export const resetCountCardsPropType = PropTypes.func.isRequired;
-export const showMoreCardsPropType = PropTypes.func.isRequired;
+export const countCardsHandlerPropType = PropTypes.func.isRequired;

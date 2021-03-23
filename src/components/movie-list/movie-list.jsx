@@ -1,58 +1,49 @@
-import React, {useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {connect} from "react-redux";
-import {
-  filmsPropType,
-  genrePropType,
-  countCardsOnPagePropType,
-  resetCountCardsPropType
-} from '../../types';
-import {CountCardsOnPage} from '../../const';
+import {filmsPropType, genrePropType} from '../../types';
+import {COUNT_MAIN_PAGE_CARDS} from '../../const';
 import {prepareFilmsByGenre} from '../../utils/utils';
 
-import MovieCardSmall from '../movie-card/movie-card-small';
+import MovieCard from '../movie-card/movie-card';
 import ShowMore from "../show-more/show-more";
-import {ActionCreator} from "../../actions/actions";
 
-const MovieList = ({films, countCardsOnPage, resetCountCards}) => {
-  let mainPageList = films.length > CountCardsOnPage.MAIN ? films.slice(0, countCardsOnPage) : films;
+const MovieList = ({films, genre}) => {
+  const [count, setCount] = useState(COUNT_MAIN_PAGE_CARDS);
+
+  const countCardsHandler = () => {
+    setCount(count + COUNT_MAIN_PAGE_CARDS);
+  };
 
   useEffect(() => {
     return () => {
-      resetCountCards();
+      setCount(COUNT_MAIN_PAGE_CARDS);
     };
-  }, []);
+  }, [genre]);
+
+  const mainPageList = films.length > COUNT_MAIN_PAGE_CARDS ? films.slice(0, count) : films;
 
   return (
     <>
       <div className="catalog__movies-list">
-        {mainPageList.map((film) => <MovieCardSmall key={film.filmId} film={film} />)}
+        {mainPageList.map((film) => <MovieCard key={film.filmId} film={film} />)}
       </div>
 
-      {mainPageList.length !== films.length && <ShowMore />}
+      {mainPageList.length !== films.length && <ShowMore countCardsHandler={countCardsHandler} />}
     </>
   );
 };
 
 MovieList.propTypes = {
   films: filmsPropType,
-  genre: genrePropType,
-  countCardsOnPage: countCardsOnPagePropType,
-  resetCountCards: resetCountCardsPropType
+  genre: genrePropType
 };
 
-const mapStateToProps = ({films, genre, countCardsOnPage}) => {
+const mapStateToProps = ({films, genre}) => {
   return {
     films: prepareFilmsByGenre({films, genre}),
-    genre,
-    countCardsOnPage
+    genre
   };
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  resetCountCards() {
-    dispatch(ActionCreator.resetCountCards());
-  }
-});
-
 export {MovieList};
-export default connect(mapStateToProps, mapDispatchToProps)(MovieList);
+export default connect(mapStateToProps, null)(MovieList);

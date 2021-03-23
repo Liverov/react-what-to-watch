@@ -1,30 +1,21 @@
 import React from 'react';
-import {connect} from "react-redux";
-import {showMoreCardsPropType} from '../../types';
-import {ActionCreator} from "../../actions/actions";
-import {CountCardsOnPage} from "../../const";
 
-const ShowMore = ({showMoreCards}) => (
+import {countCardsHandlerPropType} from '../../types';
+
+const ShowMore = ({countCardsHandler}) => (
   <div className="catalog__more">
     <button
       className="catalog__button"
       type="button"
-      onClick={showMoreCards}
+      onClick={countCardsHandler}
     >
       Show more
     </button>
   </div>
 );
 
-const mapDispatchToProps = (dispatch) => ({
-  showMoreCards() {
-    dispatch(ActionCreator.showMoreCards(CountCardsOnPage.MAIN));
-  }
-});
-
 ShowMore.propTypes = {
-  showMoreCards: showMoreCardsPropType
+  countCardsHandler: countCardsHandlerPropType
 };
 
-export {ShowMore};
-export default connect(null, mapDispatchToProps)(ShowMore);
+export default ShowMore;

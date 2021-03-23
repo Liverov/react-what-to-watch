@@ -1,6 +1,6 @@
 import React from 'react';
 
-import BigMovieCard from "../movie-card/movie-card-big";
+import MainScreenCard from "./main-screen-card";
 import MovieList from '../movie-list/movie-list';
 import GenresList from "../genres-list/genres-list";
 import Footer from '../../layout/footer';
@@ -9,7 +9,7 @@ const MainScreen = () => {
 
   return (
     <>
-      <BigMovieCard />
+      <MainScreenCard />
 
       <div className="page-content">
         <section className="catalog">

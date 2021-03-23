@@ -7,7 +7,7 @@ import {filmsPropType} from '../../types';
 import Header from '../../layout/header';
 import Avatar from '../avatar/avatar';
 import Tabs from './movie-screen-tabs';
-import MovieCardDesc from '../movie-card/movie-card-desc';
+import MovieCardInfo from '../movie-card-info/movie-card-info';
 import RelatedFilmsScreen from "../related-films-screen/related-films-screen";
 import Footer from '../../layout/footer';
 
@@ -18,7 +18,6 @@ const MovieScreen = ({films}) => {
     filmId,
     name,
     genre,
-    released,
     posterImage,
     backgroundImage
   } = films[id];
@@ -38,14 +37,14 @@ const MovieScreen = ({films}) => {
           </Header>
 
           <div className="movie-card__wrap">
-            <MovieCardDesc genre={genre} name={name} released={released} filmId={filmId}>
+            <MovieCardInfo film={films[id]}>
               <Link
                 to={`/films/${filmId}/review`}
                 className="btn movie-card__button"
               >
                 Add review
               </Link>
-            </MovieCardDesc>
+            </MovieCardInfo>
           </div>
         </div>
 

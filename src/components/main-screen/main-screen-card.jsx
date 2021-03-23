@@ -1,22 +1,19 @@
 import React from 'react';
+import {connect} from "react-redux";
 import {filmsPropType} from '../../types';
+import {getRandomInt} from "../../utils/utils";
 
 import Header from "../../layout/header";
 import Avatar from "../avatar/avatar";
-import {getRandomInt} from "../../utils/utils";
-import {connect} from "react-redux";
-import MovieCardDesc from "./movie-card-desc";
+import MovieCardInfo from "../movie-card-info/movie-card-info";
 
-const MovieCardBig = ({films}) => {
+const MainScreenCard = ({films}) => {
   const randomFilm = getRandomInt({max: films.length - 1});
 
   const {
-    filmId,
     name,
     backgroundImage,
-    posterImage,
-    genre,
-    released,
+    posterImage
   } = films[randomFilm];
 
   return (
@@ -37,18 +34,18 @@ const MovieCardBig = ({films}) => {
             <img src={posterImage} alt={`${name} poster`} width="218" height="327" />
           </div>
 
-          <MovieCardDesc genre={genre} name={name} released={released} filmId={filmId} />
+          <MovieCardInfo film={films[randomFilm]} />
         </div>
       </div>
     </section>
   );
 };
 
-MovieCardBig.propTypes = {
+MainScreenCard.propTypes = {
   films: filmsPropType
 };
 
 const mapStateToProps = ({films}) => ({films});
 
-export {MovieCardBig};
-export default connect(mapStateToProps, null)(MovieCardBig);
+export {MainScreenCard};
+export default connect(mapStateToProps, null)(MainScreenCard);
