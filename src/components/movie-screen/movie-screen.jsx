@@ -1,32 +1,26 @@
-import React, {useState, useEffect} from 'react';
-import {useParams, useHistory, Link} from 'react-router-dom';
+import React from 'react';
+import {useParams, Link} from 'react-router-dom';
+import {connect} from "react-redux";
+
 import {filmsPropType} from '../../types';
 
 import Header from '../../layout/header';
 import Avatar from '../avatar/avatar';
-import MovieCard from '../movie-card/movie-card';
 import Tabs from './movie-screen-tabs';
+import MovieCardInfo from '../movie-card-info/movie-card-info';
+import RelatedFilmsScreen from "../related-films-screen/related-films-screen";
 import Footer from '../../layout/footer';
 
-import films from '../../mocks/films';
-
-const MovieScreen = () => {
+const MovieScreen = ({films}) => {
   const {id} = useParams();
-  const history = useHistory();
-  const [film, setFilm] = useState({});
 
   const {
     filmId,
     name,
     genre,
-    released,
     posterImage,
     backgroundImage
-  } = film;
-
-  useEffect(() => {
-    setFilm(films[id]);
-  }, []);
+  } = films[id];
 
   return (
     <>
@@ -43,42 +37,14 @@ const MovieScreen = () => {
           </Header>
 
           <div className="movie-card__wrap">
-            <div className="movie-card__desc">
-              <h2 className="movie-card__title">{name}</h2>
-              <p className="movie-card__meta">
-                <span className="movie-card__genre">{genre}</span>
-                <span className="movie-card__year">{released}</span>
-              </p>
-
-              <div className="movie-card__buttons">
-                <button
-                  onClick={() => history.push(`/player/${filmId}`)}
-                  className="btn btn--play movie-card__button"
-                  type="button"
-                >
-                  <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
-                  </svg>
-                  <span>Play</span>
-                </button>
-                <button
-                  onClick={() => history.push(`/mylist/`)}
-                  className="btn btn--list movie-card__button"
-                  type="button"
-                >
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                </button>
-                <Link
-                  to={`/films/${filmId}/review`}
-                  className="btn movie-card__button"
-                >
-                  Add review
-                </Link>
-              </div>
-            </div>
+            <MovieCardInfo film={films[id]}>
+              <Link
+                to={`/films/${filmId}/review`}
+                className="btn movie-card__button"
+              >
+                Add review
+              </Link>
+            </MovieCardInfo>
           </div>
         </div>
 
@@ -94,13 +60,7 @@ const MovieScreen = () => {
       </section>
 
       <div className="page-content">
-        <section className="catalog catalog--like-this">
-          <h2 className="catalog__title">More like this</h2>
-
-          <div className="catalog__movies-list">
-            {films.filter((relatedFilm) => genre === relatedFilm.genre).map((relatedFilm) => <MovieCard key={relatedFilm.filmId} film={relatedFilm} />)}
-          </div>
-        </section>
+        <RelatedFilmsScreen genre={genre} />
 
         <Footer />
       </div>
@@ -112,4 +72,7 @@ MovieScreen.propTypes = {
   films: filmsPropType
 };
 
-export default MovieScreen;
+const mapStateToProps = ({films}) => ({films});
+
+export {MovieScreen};
+export default connect(mapStateToProps, null)(MovieScreen);

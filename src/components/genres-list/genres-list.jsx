@@ -1,6 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {filmsPropType, changeGenrePropType} from "../../types";
+import {
+  filmsPropType,
+  changeGenrePropType
+} from "../../types";
 import {FILTER_DEFAULT} from '../../const';
 
 import {ActionCreator} from "../../actions/actions";
@@ -32,7 +35,7 @@ GenresList.propTypes = {
   changeGenre: changeGenrePropType
 };
 
-const mapStateToProps = ({films}) => ({films});
+const mapStateToProps = ({films, genre}) => ({films, genre});
 const mapDispatchToProps = (dispatch) => ({
   changeGenre(item) {
     dispatch(ActionCreator.changeGenre(item));

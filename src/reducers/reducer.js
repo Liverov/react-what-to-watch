@@ -14,6 +14,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         genre: action.payload
       };
+
     default: return state;
   }
 };
