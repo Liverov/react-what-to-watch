@@ -1,9 +1,17 @@
 import React from 'react';
 import {useHistory} from "react-router-dom";
+import {filmPropType, childrenPropType} from "../../types";
 
-const MovieCardInfo = (film) => {
-  const {name, genre, released, filmId, children} = film;
+const MovieCardInfo = ({film, children}) => {
+  const {
+    name,
+    genre,
+    released,
+    itemId
+  } = film;
+
   const history = useHistory();
+
   return (
     <div className="movie-card__desc">
       <h2 className="movie-card__title">{name}</h2>
@@ -14,7 +22,7 @@ const MovieCardInfo = (film) => {
 
       <div className="movie-card__buttons">
         <button
-          onClick={() => history.push(`/player/${filmId}`)}
+          onClick={() => history.push(`/player/${itemId}`)}
           className="btn btn--play movie-card__button"
           type="button"
         >
@@ -37,6 +45,11 @@ const MovieCardInfo = (film) => {
       </div>
     </div>
   );
+};
+
+MovieCardInfo.propTypes = {
+  film: filmPropType,
+  children: childrenPropType
 };
 
 export default MovieCardInfo;

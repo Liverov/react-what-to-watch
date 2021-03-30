@@ -1,14 +1,16 @@
 import React from 'react';
+import {connect} from "react-redux";
 import {filmPropType} from '../../../types';
+import {getStarring} from '../../../utils/utils';
 
 const MovieScreenOverview = ({film}) => {
-
-  const {
+  const {filmData: {
     rating,
     scoresCount,
     director,
-    starring
-  } = film;
+    starring,
+    description
+  }} = film;
 
   return (
     <>
@@ -16,16 +18,17 @@ const MovieScreenOverview = ({film}) => {
         <div className="movie-rating__score">{rating}</div>
         <p className="movie-rating__meta">
           <span className="movie-rating__level">Very good</span>
-          <span className="movie-rating__count">{scoresCount}</span>
+          <span className="movie-rating__count">{scoresCount} ratings</span>
         </p>
       </div>
 
       <div className="movie-card__text">
-        <p>{film.description}</p>
+        <p>{description}</p>
 
         <p className="movie-card__director"><strong>Director: {director}</strong></p>
 
-        <p className="movie-card__starring"><strong>{starring.map((item) => `${item}, `)}</strong></p>
+        <p className="movie-card__starring"><strong>Starring: {getStarring(starring)}</strong></p>
+
       </div>
     </>
   );
@@ -35,4 +38,7 @@ MovieScreenOverview.propTypes = {
   film: filmPropType
 };
 
-export default MovieScreenOverview;
+const mapStateToProps = ({film}) => ({film});
+
+export {MovieScreenOverview};
+export default connect(mapStateToProps, null)(MovieScreenOverview);

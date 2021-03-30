@@ -1,16 +1,16 @@
 import React from 'react';
+import {connect} from "react-redux";
 import {filmPropType} from '../../../types';
-import {getNormalizeTime} from '../../../utils/utils';
+import {getFilmRunTime, getStarring} from '../../../utils/utils';
 
 const MovieScreenDetails = ({film}) => {
-
-  const {
+  const {filmData: {
     director,
     starring,
     runTime,
     genre,
     released,
-  } = film;
+  }} = film;
 
   return (
     <>
@@ -23,7 +23,7 @@ const MovieScreenDetails = ({film}) => {
           <p className="movie-card__details-item">
             <strong className="movie-card__details-name">Starring</strong>
             <span className="movie-card__details-value">
-              {starring.map((item) => `${item},`)}
+              {getStarring(starring)}
             </span>
           </p>
         </div>
@@ -31,7 +31,7 @@ const MovieScreenDetails = ({film}) => {
         <div className="movie-card__text-col">
           <p className="movie-card__details-item">
             <strong className="movie-card__details-name">Run Time</strong>
-            <span className="movie-card__details-value">{getNormalizeTime(runTime)}</span>
+            <span className="movie-card__details-value">{getFilmRunTime(runTime)}</span>
           </p>
           <p className="movie-card__details-item">
             <strong className="movie-card__details-name">Genre</strong>
@@ -51,4 +51,7 @@ MovieScreenDetails.propTypes = {
   film: filmPropType
 };
 
-export default MovieScreenDetails;
+const mapStateToProps = ({film}) => ({film});
+
+export {MovieScreenDetails};
+export default connect(mapStateToProps, null)(MovieScreenDetails);

@@ -4,11 +4,14 @@ import {filmsPropType, genrePropType} from '../../types';
 import {COUNT_MAIN_PAGE_CARDS} from '../../const';
 import {prepareFilmsByGenre} from '../../utils/utils';
 
+
 import MovieCard from '../movie-card/movie-card';
 import ShowMore from "../show-more/show-more";
 
+
 const MovieList = ({films, genre}) => {
   const [count, setCount] = useState(COUNT_MAIN_PAGE_CARDS);
+  const {filmsData} = films;
 
   const countCardsHandler = () => {
     setCount(count + COUNT_MAIN_PAGE_CARDS);
@@ -20,15 +23,15 @@ const MovieList = ({films, genre}) => {
     };
   }, [genre]);
 
-  const mainPageList = films.length > COUNT_MAIN_PAGE_CARDS ? films.slice(0, count) : films;
+  const mainPageList = filmsData.length > COUNT_MAIN_PAGE_CARDS ? filmsData.slice(0, count) : filmsData;
 
   return (
     <>
       <div className="catalog__movies-list">
-        {mainPageList.map((film) => <MovieCard key={film.filmId} film={film} />)}
+        {mainPageList.map((film) => <MovieCard key={film.itemId} film={film} />)}
       </div>
 
-      {mainPageList.length !== films.length && <ShowMore countCardsHandler={countCardsHandler} />}
+      {mainPageList.length !== filmsData.length && <ShowMore countCardsHandler={countCardsHandler} />}
     </>
   );
 };
@@ -38,12 +41,10 @@ MovieList.propTypes = {
   genre: genrePropType
 };
 
-const mapStateToProps = ({films, genre}) => {
-  return {
-    films: prepareFilmsByGenre({films, genre}),
-    genre
-  };
-};
+const mapStateToProps = ({films, genre}) => ({
+  films: prepareFilmsByGenre({films, genre}),
+  genre
+});
 
 export {MovieList};
 export default connect(mapStateToProps, null)(MovieList);

@@ -17,7 +17,7 @@ const MyListScreen = ({films}) => (
       <h2 className="catalog__title visually-hidden">Catalog</h2>
 
       <div className="catalog__movies-list">
-        {films.map((film, i) => film.isFavorite ? <MovieCard key={film.filmId + i} film={film} /> : ``)}
+        {films.map((film, i) => film.isFavorite ? <MovieCard key={film.id + i} film={film} /> : ``)}
       </div>
     </section>
 

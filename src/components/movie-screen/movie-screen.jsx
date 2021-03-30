@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useParams, Link} from 'react-router-dom';
 import {connect} from "react-redux";
 
-import {filmsPropType} from '../../types';
+import {filmPropType, onLoadDataPropType, onResetDataPropType} from '../../types';
+import {fetchFilm} from "../../api-actions";
 
 import Header from '../../layout/header';
 import Avatar from '../avatar/avatar';
@@ -10,17 +11,36 @@ import Tabs from './movie-screen-tabs';
 import MovieCardInfo from '../movie-card-info/movie-card-info';
 import RelatedFilmsScreen from "../related-films-screen/related-films-screen";
 import Footer from '../../layout/footer';
+import Spinner from "../spinner/spinner";
+import {ActionCreator} from "../../actions/actions";
 
-const MovieScreen = ({films}) => {
+const MovieScreen = ({film, onLoadData, onResetData}) => {
   const {id} = useParams();
 
+  const {isFilmLoaded, filmData} = film;
   const {
-    filmId,
+    itemId,
     name,
     genre,
     posterImage,
     backgroundImage
-  } = films[id];
+  } = filmData;
+
+  useEffect(() => {
+    if (!isFilmLoaded) {
+      onLoadData(id);
+    }
+  }, [isFilmLoaded]);
+
+  useEffect(() => {
+    return onResetData();
+  }, [id]);
+
+  if (!isFilmLoaded) {
+    return (
+      <Spinner />
+    );
+  }
 
   return (
     <>
@@ -37,9 +57,9 @@ const MovieScreen = ({films}) => {
           </Header>
 
           <div className="movie-card__wrap">
-            <MovieCardInfo film={films[id]}>
+            <MovieCardInfo film={filmData}>
               <Link
-                to={`/films/${filmId}/review`}
+                to={`/films/${itemId}/review`}
                 className="btn movie-card__button"
               >
                 Add review
@@ -54,7 +74,7 @@ const MovieScreen = ({films}) => {
               <img src={posterImage} alt={name} width="218" height="327" />
             </div>
 
-            <Tabs film={films[id]} />
+            <Tabs />
           </div>
         </div>
       </section>
@@ -69,10 +89,21 @@ const MovieScreen = ({films}) => {
 };
 
 MovieScreen.propTypes = {
-  films: filmsPropType
+  film: filmPropType,
+  onLoadData: onLoadDataPropType,
+  onResetData: onResetDataPropType
 };
 
-const mapStateToProps = ({films}) => ({films});
+const mapStateToProps = ({film}) => ({film});
+
+const mapDispatchToProps = (dispatch) => ({
+  onLoadData(id) {
+    dispatch(fetchFilm(id));
+  },
+  onResetData() {
+    dispatch(ActionCreator.resetFilm());
+  }
+});
 
 export {MovieScreen};
-export default connect(mapStateToProps, null)(MovieScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(MovieScreen);
