@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {fetchFilms} from "../../api-actions";
 import {filmsPropType, onLoadDataPropType} from "../../types";
 
-import Spinner from '../spinner/spinner';
+import Loader from '../loader/loader';
 import MainScreenCard from "./main-screen-card";
 import MovieList from '../movie-list/movie-list';
 import GenresList from "../genres-list/genres-list";
@@ -21,7 +21,7 @@ const MainScreen = ({films, onLoadData}) => {
 
   if (!isFilmsLoaded) {
     return (
-      <Spinner />
+      <Loader />
     );
   }
 

@@ -1,11 +1,9 @@
 export const ActionType = {
   CHANGE_GENRE: `films/changeGenre`,
   LOAD_FILMS: `data/loadFilms`,
-  LOAD_FILM: `data/loadFilm`,
+  SET_FILM: `data/loadFilm`,
   LOAD_PROMO_FILM: `data/loadFilmsPromo`,
-  RESET_FILM: `data/resetFilm`,
-  LOAD_COMMENTS: `data/loadComments`,
-  RESET_COMMENTS: `data/resetComments`
+  SET_COMMENTS: `data/setComments`
 };
 
 export const ActionCreator = {
@@ -21,9 +19,9 @@ export const ActionCreator = {
       payload: films
     };
   },
-  loadFilm: (film) => {
+  setFilm: (film) => {
     return {
-      type: ActionType.LOAD_FILM,
+      type: ActionType.SET_FILM,
       payload: film
     };
   },
@@ -33,20 +31,10 @@ export const ActionCreator = {
       payload: promoFilm
     };
   },
-  resetFilm: () => {
+  setComments: (comments) => {
     return {
-      type: ActionType.RESET_FILM
-    };
-  },
-  loadComments: (comments) => {
-    return {
-      type: ActionType.LOAD_COMMENTS,
+      type: ActionType.SET_COMMENTS,
       payload: comments
-    };
-  },
-  resetComments: () => {
-    return {
-      type: ActionType.RESET_COMMENTS,
     };
   }
 };

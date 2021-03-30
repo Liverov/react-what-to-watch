@@ -1,12 +1,28 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {connect} from "react-redux";
 import {COUNT_RELATED_CARDS} from "../../const";
-import MovieCard from "../movie-card/movie-card";
-import {filmsPropType, genrePropType} from "../../types";
+import {filmsPropType, genrePropType, onLoadDataPropType} from "../../types";
+import {fetchFilms} from "../../api-actions";
 
-const RelatedFilmsScreen = ({films, genre}) => {
-  const {filmsData} = films;
+import MovieCard from "../movie-card/movie-card";
+import Loader from "../loader/loader";
+
+
+const RelatedFilmsScreen = ({films, genre, onLoadData}) => {
+  const {filmsData, isFilmsLoaded} = films;
   const getRelatedFilms = filmsData.filter((relatedFilm) => genre === relatedFilm.genre).slice(0, COUNT_RELATED_CARDS);
+
+  useEffect(() => {
+    if (!isFilmsLoaded) {
+      onLoadData();
+    }
+  }, []);
+
+  if (!isFilmsLoaded) {
+    return (
+      <Loader />
+    );
+  }
 
   return (
     <section className="catalog catalog--like-this">
@@ -23,10 +39,15 @@ const RelatedFilmsScreen = ({films, genre}) => {
 
 RelatedFilmsScreen.propTypes = {
   films: filmsPropType,
-  genre: genrePropType
+  genre: genrePropType,
+  onLoadData: onLoadDataPropType
 };
 
 const mapStateToProps = ({films}) => ({films});
-
+const mapDispatchToProps = (dispatch) => ({
+  onLoadData() {
+    dispatch(fetchFilms());
+  }
+});
 export {RelatedFilmsScreen};
-export default connect(mapStateToProps, null)(RelatedFilmsScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(RelatedFilmsScreen);

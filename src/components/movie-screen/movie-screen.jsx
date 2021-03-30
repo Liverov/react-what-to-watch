@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {useParams, Link} from 'react-router-dom';
 import {connect} from "react-redux";
 
-import {filmPropType, onLoadDataPropType, onResetDataPropType} from '../../types';
+import {filmPropType, onLoadDataPropType} from '../../types';
 import {fetchFilm} from "../../api-actions";
 
 import Header from '../../layout/header';
@@ -11,10 +11,9 @@ import Tabs from './movie-screen-tabs';
 import MovieCardInfo from '../movie-card-info/movie-card-info';
 import RelatedFilmsScreen from "../related-films-screen/related-films-screen";
 import Footer from '../../layout/footer';
-import Spinner from "../spinner/spinner";
-import {ActionCreator} from "../../actions/actions";
+import Loader from "../loader/loader";
 
-const MovieScreen = ({film, onLoadData, onResetData}) => {
+const MovieScreen = ({film, onLoadData}) => {
   const {id} = useParams();
 
   const {isFilmLoaded, filmData} = film;
@@ -27,18 +26,14 @@ const MovieScreen = ({film, onLoadData, onResetData}) => {
   } = filmData;
 
   useEffect(() => {
-    if (!isFilmLoaded) {
+    if (!isFilmLoaded || itemId !== id) {
       onLoadData(id);
     }
-  }, [isFilmLoaded]);
-
-  useEffect(() => {
-    return onResetData();
   }, [id]);
 
   if (!isFilmLoaded) {
     return (
-      <Spinner />
+      <Loader />
     );
   }
 
@@ -90,8 +85,7 @@ const MovieScreen = ({film, onLoadData, onResetData}) => {
 
 MovieScreen.propTypes = {
   film: filmPropType,
-  onLoadData: onLoadDataPropType,
-  onResetData: onResetDataPropType
+  onLoadData: onLoadDataPropType
 };
 
 const mapStateToProps = ({film}) => ({film});
@@ -99,9 +93,6 @@ const mapStateToProps = ({film}) => ({film});
 const mapDispatchToProps = (dispatch) => ({
   onLoadData(id) {
     dispatch(fetchFilm(id));
-  },
-  onResetData() {
-    dispatch(ActionCreator.resetFilm());
   }
 });
 

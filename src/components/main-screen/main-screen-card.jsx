@@ -6,7 +6,7 @@ import {fetchPromoFilm} from "../../api-actions";
 import Header from "../../layout/header";
 import Avatar from "../avatar/avatar";
 import MovieCardInfo from "../movie-card-info/movie-card-info";
-import Spinner from "../spinner/spinner";
+import Loader from "../loader/loader";
 
 const MainScreenCard = ({promoFilm, onLoadData}) => {
   const {isPromoFilmLoaded, promoFilmData} = promoFilm;
@@ -19,7 +19,7 @@ const MainScreenCard = ({promoFilm, onLoadData}) => {
 
   if (!isPromoFilmLoaded) {
     return (
-      <Spinner />
+      <Loader />
     );
   }
 

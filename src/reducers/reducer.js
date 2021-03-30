@@ -5,19 +5,19 @@ const initialState = {
   genre: FILTER_DEFAULT,
   films: {
     filmsData: [],
-    isLoaded: false,
+    isFilmsLoaded: false,
   },
   film: {
     filmData: {},
-    isLoaded: false
+    isFilmLoaded: false
   },
   promoFilm: {
     promoFilmData: {},
-    isLoaded: false
+    isPromoFilmLoaded: false
   },
   comments: {
     commentsData: [],
-    isLoaded: false
+    isCommentsLoaded: false
   }
 };
 
@@ -36,7 +36,7 @@ const reducer = (state = initialState, action) => {
           isFilmsLoaded: true,
         }
       };
-    case ActionType.LOAD_FILM:
+    case ActionType.SET_FILM:
       return {
         ...state,
         film: {
@@ -52,23 +52,13 @@ const reducer = (state = initialState, action) => {
           isPromoFilmLoaded: true,
         }
       };
-    case ActionType.RESET_FILM:
-      return {
-        ...state,
-        film: initialState.film
-      };
-    case ActionType.LOAD_COMMENTS:
+    case ActionType.SET_COMMENTS:
       return {
         ...state,
         comments: {
           commentsData: action.payload,
           isCommentsLoaded: true
         }
-      };
-    case ActionType.RESET_COMMENTS:
-      return {
-        ...state,
-        comments: initialState.comments
       };
     default: return state;
   }
