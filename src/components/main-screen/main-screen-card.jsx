@@ -1,14 +1,16 @@
 import React, {useEffect} from 'react';
 import {connect} from "react-redux";
-import {filmPropType, onLoadDataPropType} from '../../types';
+import {filmPropType, onLoadDataPropType, authorizationStatusPropType} from '../../types';
 import {fetchPromoFilm} from "../../api-actions";
 
 import Header from "../../layout/header";
 import Avatar from "../avatar/avatar";
 import MovieCardInfo from "../movie-card-info/movie-card-info";
 import Loader from "../loader/loader";
+import {AuthorizationStatus} from "../../const";
+import LoginButton from "../login-button/login-button";
 
-const MainScreenCard = ({promoFilm, onLoadData}) => {
+const MainScreenCard = ({promoFilm, onLoadData, authorizationStatus}) => {
   const {isPromoFilmLoaded, promoFilmData} = promoFilm;
 
   useEffect(() => {
@@ -39,7 +41,7 @@ const MainScreenCard = ({promoFilm, onLoadData}) => {
       <h1 className="visually-hidden">WTW</h1>
 
       <Header setClassName="movie-card__head">
-        <Avatar />
+        {authorizationStatus === AuthorizationStatus.AUTH ? <Avatar /> : <LoginButton />}
       </Header>
 
       <div className="movie-card__wrap">
@@ -57,10 +59,11 @@ const MainScreenCard = ({promoFilm, onLoadData}) => {
 
 MainScreenCard.propTypes = {
   promoFilm: filmPropType,
-  onLoadData: onLoadDataPropType
+  onLoadData: onLoadDataPropType,
+  authorizationStatus: authorizationStatusPropType
 };
 
-const mapStateToProps = ({promoFilm}) => ({promoFilm});
+const mapStateToProps = ({promoFilm, authorizationStatus}) => ({promoFilm, authorizationStatus});
 const mapDispatchToProps = (dispatch) => ({
   onLoadData() {
     dispatch(fetchPromoFilm());

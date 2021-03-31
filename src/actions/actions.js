@@ -3,7 +3,9 @@ export const ActionType = {
   LOAD_FILMS: `data/loadFilms`,
   SET_FILM: `data/loadFilm`,
   LOAD_PROMO_FILM: `data/loadFilmsPromo`,
-  SET_COMMENTS: `data/setComments`
+  SET_COMMENTS: `data/setComments`,
+  REQUIRED_AUTHORIZATION: `user/requiredAuthorization`,
+  REDIRECT_TO_ROUTE: `global/redirectToRoute`,
 };
 
 export const ActionCreator = {
@@ -36,5 +38,15 @@ export const ActionCreator = {
       type: ActionType.SET_COMMENTS,
       payload: comments
     };
-  }
+  },
+  requiredAuthorization: (status) => {
+    return {
+      type: ActionType.REQUIRED_AUTHORIZATION,
+      payload: status
+    };
+  },
+  redirectToRoute: (url) => ({
+    type: ActionType.REDIRECT_TO_ROUTE,
+    payload: url,
+  })
 };
