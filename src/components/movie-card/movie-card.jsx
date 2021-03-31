@@ -5,6 +5,8 @@ import {filmPropType} from '../../types';
 import Player from '../player/player';
 
 const MovieCard = ({film}) => {
+  const {itemId, name} = film;
+
   const history = useHistory();
   const [isPlaying, setIsPlaying] = useState(false);
   return (
@@ -13,16 +15,16 @@ const MovieCard = ({film}) => {
         <div
           onMouseEnter={() => setIsPlaying(true)}
           onMouseOut={() => setIsPlaying(false)}
-          onClick={() => history.push(`/films/${film.filmId}`)}
+          onClick={() => history.push(`/films/${itemId}`)}
           className="small-movie-card__image"
         >
-          <Player film={film} isPlaying={isPlaying} />
+          <Player film={film} isPlaying={isPlaying} isPreviewVideo={true} />
         </div>
         <h3 className="small-movie-card__title">
-          <Link to={`/films/${film.filmId}`}
+          <Link to={`/films/${itemId}`}
             className="small-movie-card__link"
           >
-            {film.name}
+            {name}
           </Link>
         </h3>
       </article>

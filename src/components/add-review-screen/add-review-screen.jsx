@@ -1,28 +1,23 @@
-import React, {useEffect, useState} from 'react';
-import {Link, useParams} from 'react-router-dom';
-import {filmsPropType} from '../../types';
+import React from 'react';
+import {Link} from 'react-router-dom';
+import {connect} from "react-redux";
 
-import films from '../../mocks/films';
+import {filmPropType} from '../../types';
 
 import Header from '../../layout/header';
 import Avatar from '../avatar/avatar';
 import AddReviewForm from '../add-review-form/add-review-form';
 
 
-const AddReviewScreen = () => {
-  const {id} = useParams();
-  const [film, setFilm] = useState({});
-
+const AddReviewScreen = ({film}) => {
+  const {filmData} = film;
   const {
-    filmId,
+    itemId,
     backgroundImage,
     name,
     posterImage,
-  } = film;
+  } = filmData;
 
-  useEffect(() => {
-    setFilm(films[id]);
-  }, []);
 
   return (
     <section className="movie-card movie-card--full">
@@ -37,7 +32,7 @@ const AddReviewScreen = () => {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <Link to={`/films/${filmId}`} className="breadcrumbs__link">{name}</Link>
+                <Link to={`/films/${itemId}`} className="breadcrumbs__link">{name}</Link>
               </li>
               <li className="breadcrumbs__item">
                 <a className="breadcrumbs__link">Add review</a>
@@ -60,7 +55,10 @@ const AddReviewScreen = () => {
 };
 
 AddReviewScreen.propTypes = {
-  films: filmsPropType
+  film: filmPropType
 };
 
-export default AddReviewScreen;
+const mapStateToProps = ({film}) => ({film});
+
+export {AddReviewScreen};
+export default connect(mapStateToProps, null)(AddReviewScreen);

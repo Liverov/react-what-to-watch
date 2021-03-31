@@ -1,15 +1,12 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {
-  filmsPropType,
-  changeGenrePropType
-} from "../../types";
+import {filmsPropType, changeGenrePropType} from "../../types";
 import {FILTER_DEFAULT} from '../../const';
-
 import {ActionCreator} from "../../actions/actions";
 
 const GenresList = ({films, changeGenre}) => {
-  const originalGenres = [FILTER_DEFAULT, ...new Set(films.map((film) => film.genre))];
+  const {filmsData} = films;
+  const originalGenres = [FILTER_DEFAULT, ...new Set(filmsData.map((film) => film.genre))];
 
   return (
     <ul className="catalog__genres-list">

@@ -1,11 +1,10 @@
 import React, {useState} from 'react';
-import {filmPropType} from '../../types';
 
 import MovieScreenOverview from './movie-screen-overview/movie-screen-overview';
 import MovieScreenDetails from './movie-screen-details/movie-screen-details';
 import MovieScreenReviews from './movie-screen-reviews/movie-screen-reviews';
 
-const Tabs = ({film}) => {
+const Tabs = () => {
   const [tab, setTab] = useState(`Overview`);
 
   const TABS = [
@@ -16,9 +15,9 @@ const Tabs = ({film}) => {
 
   const getScreen = () => {
     switch (tab) {
-      case `Details`: return <MovieScreenDetails film={film} />;
-      case `Reviews`: return <MovieScreenReviews film={film} />;
-      default: return <MovieScreenOverview film={film} />;
+      case `Details`: return <MovieScreenDetails />;
+      case `Reviews`: return <MovieScreenReviews />;
+      default: return <MovieScreenOverview />;
     }
   };
 
@@ -47,10 +46,6 @@ const Tabs = ({film}) => {
       {getScreen(tab)}
     </div>
   );
-};
-
-Tabs.propTypes = {
-  film: filmPropType
 };
 
 export default Tabs;

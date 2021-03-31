@@ -1,20 +1,34 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {connect} from "react-redux";
-import {filmsPropType} from '../../types';
-import {getRandomInt} from "../../utils/utils";
+import {filmPropType, onLoadDataPropType} from '../../types';
+import {fetchPromoFilm} from "../../api-actions";
 
 import Header from "../../layout/header";
 import Avatar from "../avatar/avatar";
 import MovieCardInfo from "../movie-card-info/movie-card-info";
+import Loader from "../loader/loader";
 
-const MainScreenCard = ({films}) => {
-  const randomFilm = getRandomInt({max: films.length - 1});
+const MainScreenCard = ({promoFilm, onLoadData}) => {
+  const {isPromoFilmLoaded, promoFilmData} = promoFilm;
+
+  useEffect(() => {
+    if (!isPromoFilmLoaded) {
+      onLoadData();
+    }
+  }, [isPromoFilmLoaded]);
+
+  if (!isPromoFilmLoaded) {
+    return (
+      <Loader />
+    );
+  }
 
   const {
     name,
     backgroundImage,
     posterImage
-  } = films[randomFilm];
+  } = promoFilmData;
+
 
   return (
     <section className="movie-card">
@@ -34,7 +48,7 @@ const MainScreenCard = ({films}) => {
             <img src={posterImage} alt={`${name} poster`} width="218" height="327" />
           </div>
 
-          <MovieCardInfo film={films[randomFilm]} />
+          <MovieCardInfo film={promoFilmData} />
         </div>
       </div>
     </section>
@@ -42,10 +56,15 @@ const MainScreenCard = ({films}) => {
 };
 
 MainScreenCard.propTypes = {
-  films: filmsPropType
+  promoFilm: filmPropType,
+  onLoadData: onLoadDataPropType
 };
 
-const mapStateToProps = ({films}) => ({films});
-
+const mapStateToProps = ({promoFilm}) => ({promoFilm});
+const mapDispatchToProps = (dispatch) => ({
+  onLoadData() {
+    dispatch(fetchPromoFilm());
+  }
+});
 export {MainScreenCard};
-export default connect(mapStateToProps, null)(MainScreenCard);
+export default connect(mapStateToProps, mapDispatchToProps)(MainScreenCard);

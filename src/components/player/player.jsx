@@ -2,7 +2,13 @@ import React, {useRef, useEffect} from 'react';
 import PropTypes from "prop-types";
 import {filmPropType} from '../../types';
 
-const Player = ({film, isPlaying, isMuted = true}) => {
+const Player = ({film, isPlaying, isMuted = true, isPreviewVideo = false}) => {
+  const {
+    previewVideoLink,
+    videoLink,
+    posterImage
+  } = film;
+
   const videoRef = useRef();
   const timerRef = useRef(null);
 
@@ -20,13 +26,23 @@ const Player = ({film, isPlaying, isMuted = true}) => {
 
   }, [isPlaying]);
 
-  return <video src={film.videoLink} className="player__video" poster={film.posterImage} ref={videoRef} muted={isMuted}></video>;
+  return <video
+    src={isPreviewVideo ?
+      previewVideoLink :
+      videoLink
+    }
+    className="player__video"
+    poster={posterImage}
+    ref={videoRef} muted={isMuted}
+  >
+  </video>;
 };
 
 Player.propTypes = {
   film: filmPropType,
   isPlaying: PropTypes.bool,
-  isMuted: PropTypes.bool
+  isMuted: PropTypes.bool,
+  isPreviewVideo: PropTypes.bool
 };
 
 export default Player;

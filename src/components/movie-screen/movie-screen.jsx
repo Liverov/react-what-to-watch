@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useParams, Link} from 'react-router-dom';
 import {connect} from "react-redux";
 
-import {filmsPropType} from '../../types';
+import {filmPropType, onLoadDataPropType} from '../../types';
+import {fetchFilm} from "../../api-actions";
 
 import Header from '../../layout/header';
 import Avatar from '../avatar/avatar';
@@ -10,17 +11,31 @@ import Tabs from './movie-screen-tabs';
 import MovieCardInfo from '../movie-card-info/movie-card-info';
 import RelatedFilmsScreen from "../related-films-screen/related-films-screen";
 import Footer from '../../layout/footer';
+import Loader from "../loader/loader";
 
-const MovieScreen = ({films}) => {
+const MovieScreen = ({film, onLoadData}) => {
   const {id} = useParams();
 
+  const {isFilmLoaded, filmData} = film;
   const {
-    filmId,
+    itemId,
     name,
     genre,
     posterImage,
     backgroundImage
-  } = films[id];
+  } = filmData;
+
+  useEffect(() => {
+    if (!isFilmLoaded || itemId !== id) {
+      onLoadData(id);
+    }
+  }, [id]);
+
+  if (!isFilmLoaded) {
+    return (
+      <Loader />
+    );
+  }
 
   return (
     <>
@@ -37,9 +52,9 @@ const MovieScreen = ({films}) => {
           </Header>
 
           <div className="movie-card__wrap">
-            <MovieCardInfo film={films[id]}>
+            <MovieCardInfo film={filmData}>
               <Link
-                to={`/films/${filmId}/review`}
+                to={`/films/${itemId}/review`}
                 className="btn movie-card__button"
               >
                 Add review
@@ -54,7 +69,7 @@ const MovieScreen = ({films}) => {
               <img src={posterImage} alt={name} width="218" height="327" />
             </div>
 
-            <Tabs film={films[id]} />
+            <Tabs />
           </div>
         </div>
       </section>
@@ -69,10 +84,17 @@ const MovieScreen = ({films}) => {
 };
 
 MovieScreen.propTypes = {
-  films: filmsPropType
+  film: filmPropType,
+  onLoadData: onLoadDataPropType
 };
 
-const mapStateToProps = ({films}) => ({films});
+const mapStateToProps = ({film}) => ({film});
+
+const mapDispatchToProps = (dispatch) => ({
+  onLoadData(id) {
+    dispatch(fetchFilm(id));
+  }
+});
 
 export {MovieScreen};
-export default connect(mapStateToProps, null)(MovieScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(MovieScreen);
