@@ -1,19 +1,21 @@
 import React, {useEffect} from 'react';
-import {useParams, Link} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 import {connect} from "react-redux";
 
-import {filmPropType, onLoadDataPropType} from '../../types';
+import {authorizationStatusPropType, filmPropType, onLoadDataPropType} from '../../types';
 import {fetchFilm} from "../../api-actions";
+import {SetAuthStatus} from "../../const";
 
 import Header from '../../layout/header';
-import Avatar from '../avatar/avatar';
+import CheckAuth from "../check-auth/check-auth";
 import Tabs from './movie-screen-tabs';
 import MovieCardInfo from '../movie-card-info/movie-card-info';
 import RelatedFilmsScreen from "../related-films-screen/related-films-screen";
 import Footer from '../../layout/footer';
 import Loader from "../loader/loader";
+import AddReviewButton from "../add-review-button/add-review-button";
 
-const MovieScreen = ({film, onLoadData}) => {
+const MovieScreen = ({film, authorizationStatus, onLoadData}) => {
   const {id} = useParams();
 
   const {isFilmLoaded, filmData} = film;
@@ -48,17 +50,12 @@ const MovieScreen = ({film, onLoadData}) => {
           <h1 className="visually-hidden">WTW</h1>
 
           <Header setClassName="movie-card__head">
-            <Avatar />
+            <CheckAuth />
           </Header>
 
           <div className="movie-card__wrap">
             <MovieCardInfo film={filmData}>
-              <Link
-                to={`/films/${itemId}/review`}
-                className="btn movie-card__button"
-              >
-                Add review
-              </Link>
+              {authorizationStatus === SetAuthStatus.AUTH ? <AddReviewButton itemId={itemId} /> : null}
             </MovieCardInfo>
           </div>
         </div>
@@ -85,10 +82,11 @@ const MovieScreen = ({film, onLoadData}) => {
 
 MovieScreen.propTypes = {
   film: filmPropType,
-  onLoadData: onLoadDataPropType
+  onLoadData: onLoadDataPropType,
+  authorizationStatus: authorizationStatusPropType
 };
 
-const mapStateToProps = ({film}) => ({film});
+const mapStateToProps = ({film, authorizationStatus}) => ({film, authorizationStatus});
 
 const mapDispatchToProps = (dispatch) => ({
   onLoadData(id) {

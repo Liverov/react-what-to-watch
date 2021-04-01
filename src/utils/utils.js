@@ -14,7 +14,8 @@ export const getStarring = (starring) => {
 };
 
 export const prepareFilmsByGenre = ({films, genre}) => {
-  return genre !== FILTER_DEFAULT ? films.filter((item) => item.genre === genre) : films;
+  const {filmsData} = films;
+  return genre !== FILTER_DEFAULT ? filmsData.filter((item) => item.genre === genre) : filmsData;
 };
 
 const renameObjectKeys = (data) => {

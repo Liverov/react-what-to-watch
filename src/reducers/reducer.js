@@ -1,5 +1,5 @@
 import {ActionType} from "../actions/actions";
-import {FILTER_DEFAULT} from "../const";
+import {FILTER_DEFAULT, SetAuthStatus} from "../const";
 
 const initialState = {
   genre: FILTER_DEFAULT,
@@ -18,7 +18,8 @@ const initialState = {
   comments: {
     commentsData: [],
     isCommentsLoaded: false
-  }
+  },
+  authorizationStatus: SetAuthStatus.NO_AUTH
 };
 
 const reducer = (state = initialState, action) => {
@@ -59,6 +60,11 @@ const reducer = (state = initialState, action) => {
           commentsData: action.payload,
           isCommentsLoaded: true
         }
+      };
+    case ActionType.REQUIRED_AUTHORIZATION:
+      return {
+        ...state,
+        authorizationStatus: action.payload
       };
     default: return state;
   }

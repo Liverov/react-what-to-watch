@@ -4,7 +4,7 @@ import {filmPropType, onLoadDataPropType} from '../../types';
 import {fetchPromoFilm} from "../../api-actions";
 
 import Header from "../../layout/header";
-import Avatar from "../avatar/avatar";
+import CheckAuth from "../check-auth/check-auth";
 import MovieCardInfo from "../movie-card-info/movie-card-info";
 import Loader from "../loader/loader";
 
@@ -39,7 +39,7 @@ const MainScreenCard = ({promoFilm, onLoadData}) => {
       <h1 className="visually-hidden">WTW</h1>
 
       <Header setClassName="movie-card__head">
-        <Avatar />
+        <CheckAuth />
       </Header>
 
       <div className="movie-card__wrap">

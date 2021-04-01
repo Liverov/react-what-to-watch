@@ -42,7 +42,9 @@ MovieList.propTypes = {
 };
 
 const mapStateToProps = ({films, genre}) => ({
-  films: prepareFilmsByGenre({films, genre}),
+  films: {
+    filmsData: prepareFilmsByGenre({films, genre})
+  },
   genre
 });
 
