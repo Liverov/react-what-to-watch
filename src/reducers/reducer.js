@@ -9,11 +9,8 @@ const initialState = {
   },
   film: {
     filmData: {},
-    isFilmLoaded: false
-  },
-  promoFilm: {
-    promoFilmData: {},
-    isPromoFilmLoaded: false
+    isFilmLoaded: false,
+    isPromo: false
   },
   comments: {
     commentsData: [],
@@ -40,18 +37,7 @@ const reducer = (state = initialState, action) => {
     case ActionType.SET_FILM:
       return {
         ...state,
-        film: {
-          filmData: action.payload,
-          isFilmLoaded: true,
-        }
-      };
-    case ActionType.LOAD_PROMO_FILM:
-      return {
-        ...state,
-        promoFilm: {
-          promoFilmData: action.payload,
-          isPromoFilmLoaded: true,
-        }
+        film: action.payload
       };
     case ActionType.SET_COMMENTS:
       return {

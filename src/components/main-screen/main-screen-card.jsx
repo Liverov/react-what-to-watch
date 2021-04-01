@@ -8,16 +8,16 @@ import CheckAuth from "../check-auth/check-auth";
 import MovieCardInfo from "../movie-card-info/movie-card-info";
 import Loader from "../loader/loader";
 
-const MainScreenCard = ({promoFilm, onLoadData}) => {
-  const {isPromoFilmLoaded, promoFilmData} = promoFilm;
+const MainScreenCard = ({film, onLoadData}) => {
+  const {isFilmLoaded, isPromo, filmData} = film;
 
   useEffect(() => {
-    if (!isPromoFilmLoaded) {
+    if (!isFilmLoaded || !isPromo) {
       onLoadData();
     }
-  }, [isPromoFilmLoaded]);
+  }, [isFilmLoaded]);
 
-  if (!isPromoFilmLoaded) {
+  if (!isFilmLoaded) {
     return (
       <Loader />
     );
@@ -27,7 +27,7 @@ const MainScreenCard = ({promoFilm, onLoadData}) => {
     name,
     backgroundImage,
     posterImage
-  } = promoFilmData;
+  } = filmData;
 
 
   return (
@@ -48,7 +48,7 @@ const MainScreenCard = ({promoFilm, onLoadData}) => {
             <img src={posterImage} alt={`${name} poster`} width="218" height="327" />
           </div>
 
-          <MovieCardInfo film={promoFilmData} />
+          <MovieCardInfo film={filmData} />
         </div>
       </div>
     </section>
@@ -56,11 +56,11 @@ const MainScreenCard = ({promoFilm, onLoadData}) => {
 };
 
 MainScreenCard.propTypes = {
-  promoFilm: filmPropType,
+  film: filmPropType,
   onLoadData: onLoadDataPropType
 };
 
-const mapStateToProps = ({promoFilm}) => ({promoFilm});
+const mapStateToProps = ({film}) => ({film});
 const mapDispatchToProps = (dispatch) => ({
   onLoadData() {
     dispatch(fetchPromoFilm());

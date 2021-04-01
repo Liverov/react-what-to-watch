@@ -2,7 +2,7 @@ export const ActionType = {
   CHANGE_GENRE: `films/changeGenre`,
   LOAD_FILMS: `data/loadFilms`,
   SET_FILM: `data/loadFilm`,
-  LOAD_PROMO_FILM: `data/loadFilmsPromo`,
+  SET_PROMO_FILM: `data/loadFilmsPromo`,
   SET_COMMENTS: `data/setComments`,
   REQUIRED_AUTHORIZATION: `user/requiredAuthorization`,
   REDIRECT_TO_ROUTE: `global/redirectToRoute`,
@@ -21,16 +21,14 @@ export const ActionCreator = {
       payload: films
     };
   },
-  setFilm: (film) => {
+  setFilm: ({filmData, isFilmLoaded, isPromo}) => {
     return {
       type: ActionType.SET_FILM,
-      payload: film
-    };
-  },
-  loadPromoFilm: (promoFilm) => {
-    return {
-      type: ActionType.LOAD_PROMO_FILM,
-      payload: promoFilm
+      payload: {
+        filmData,
+        isFilmLoaded,
+        isPromo
+      }
     };
   },
   setComments: (comments) => {

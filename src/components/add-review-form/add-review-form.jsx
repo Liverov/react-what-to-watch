@@ -1,13 +1,40 @@
 import React, {useState} from 'react';
+import {connect} from "react-redux";
+import {setComment} from "../../api-actions";
+import {filmPropType, onSetCommentPropType} from "../../types";
+import {LimitCommentLength, CommentFormTextErrorMessage} from "../../const";
 
-const AddReviewForm = () => {
+const AddReviewForm = ({film, onSetComment}) => {
+  const {filmData: {itemId}} = film;
+
   const [reviewForm, setReviewFrom] = useState({
-    'rating': 0,
+    'rating': 10,
     'review-text': ``
   });
 
+  const [errorMessage, setErrorMessage] = useState(CommentFormTextErrorMessage.MIN_CHARS);
+
+  const toggleDisabled = (element, status) => {
+    for (const target of element) {
+      target.disabled = status;
+    }
+  };
   const handleSubmit = (evt) => {
     evt.preventDefault();
+
+    toggleDisabled(evt.target[`rating`], true);
+    evt.target[`review-text`].disabled = true;
+    evt.target[`submit-button`].disabled = true;
+
+    onSetComment({
+      id: itemId,
+      rating: reviewForm.rating,
+      comment: reviewForm[`review-text`]
+    });
+
+    toggleDisabled(evt.target[`rating`], false);
+    evt.target[`review-text`].disabled = false;
+    evt.target[`submit-button`].disabled = false;
   };
 
   const handleFieldChange = (evt) => {
@@ -17,10 +44,21 @@ const AddReviewForm = () => {
       ...reviewForm,
       [name]: value
     });
+
+    if (name === `review-text`) {
+      if (value.length < LimitCommentLength.MIN) {
+        setErrorMessage(CommentFormTextErrorMessage.MIN_CHARS);
+      } else if (value.length > LimitCommentLength.MAX) {
+        setErrorMessage(CommentFormTextErrorMessage.MAX_CHARS);
+      } else {
+        setErrorMessage(``);
+      }
+    }
   };
 
   return (
     <div className="add-review">
+      <p>{errorMessage}</p>
       <form onSubmit={handleSubmit} action="#" className="add-review__form">
         <div className="rating">
           <div className="rating__stars">
@@ -57,15 +95,41 @@ const AddReviewForm = () => {
         </div>
 
         <div className="add-review__text">
-          <textarea onChange={handleFieldChange} className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text"></textarea>
+          <textarea
+            onFocus={(evt) => (evt.target.placeholder = ``)}
+            onChange={handleFieldChange}
+            className="add-review__textarea"
+            name="review-text"
+            id="review-text"
+            placeholder="Review text">
+          </textarea>
           <div className="add-review__submit">
-            <button className="add-review__btn" type="submit">Post</button>
+            <button
+              className="add-review__btn"
+              type="submit"
+              name="submit-button"
+            >
+              Post
+            </button>
           </div>
-
         </div>
+        <small>Characters counter: {reviewForm[`review-text`].length}</small>
       </form>
     </div>
   );
 };
 
-export default AddReviewForm;
+AddReviewForm.propTypes = {
+  film: filmPropType,
+  onSetComment: onSetCommentPropType
+};
+
+const mapStateToProps = ({film}) => ({film});
+const mapDispatchToProps = (dispatch) => ({
+  onSetComment(commentData) {
+    dispatch(setComment(commentData));
+  }
+});
+
+export {AddReviewForm};
+export default connect(mapStateToProps, mapDispatchToProps)(AddReviewForm);

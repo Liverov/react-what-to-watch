@@ -14,14 +14,26 @@ export const fetchFilms = () => (dispatch, _getState, api) => (
 export const fetchFilm = (id) => (dispatch, _getState, api) => (
   api.get(`${APIRoutes.FILMS}/${id}`)
     .then(({data}) => {
-      dispatch(ActionCreator.setFilm(getNormalizeData(data)));
+      dispatch(ActionCreator.setFilm(
+          {
+            filmData: getNormalizeData(data),
+            isFilmLoaded: true,
+            isPromo: false
+          }
+      ));
     })
 );
 
 export const fetchPromoFilm = () => (dispatch, _getState, api) => (
   api.get(APIRoutes.PROMO_FILM)
     .then(({data}) => {
-      dispatch(ActionCreator.loadPromoFilm(getNormalizeData(data)));
+      dispatch(ActionCreator.setFilm(
+          {
+            filmData: getNormalizeData(data),
+            isFilmLoaded: true,
+            isPromo: true
+          }
+      ));
     })
 );
 
@@ -30,6 +42,14 @@ export const fetchComments = (id) => (dispatch, _getState, api) => (
     .then(({data}) => {
       dispatch(ActionCreator.setComments(getNormalizeData(data)));
     })
+);
+
+export const setComment = ({id, rating, comment}) => (dispatch, _getState, api) => (
+  api.post(`${APIRoutes.COMMENTS}/${id}`, {rating, comment})
+    .then(({data}) => {
+      dispatch(ActionCreator.setComments(getNormalizeData(data)));
+    })
+    .then(() => dispatch(ActionCreator.redirectToRoute(`${APIRoutes.FILMS}/${id}`)))
 );
 
 export const checkAuth = () => (dispatch, _getState, api) => (

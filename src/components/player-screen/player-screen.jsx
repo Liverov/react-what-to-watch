@@ -7,11 +7,13 @@ import {getFilmRunTime} from '../../utils/utils';
 const PlayerScreen = ({film}) => {
   const history = useHistory();
 
-  const {filmData: {
+  const {filmData} = film;
+
+  const {
     backgroundImage,
     videoLink,
     runTime,
-  }} = film;
+  } = filmData;
 
   return (
     <div className="player">

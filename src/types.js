@@ -43,5 +43,6 @@ export const genrePropType = PropTypes.string;
 export const changeGenrePropType = PropTypes.func.isRequired;
 export const countCardsHandlerPropType = PropTypes.func.isRequired;
 export const onLoadDataPropType = PropTypes.func.isRequired;
+export const onSetCommentPropType = PropTypes.func.isRequired;
 export const childrenPropType = PropTypes.element;
 export const authorizationStatusPropType = PropTypes.string.isRequired;

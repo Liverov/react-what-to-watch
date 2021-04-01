@@ -3,6 +3,16 @@ export const SetAuthStatus = {
   NO_AUTH: `NO_AUTH`,
 };
 
+export const LimitCommentLength = {
+  MIN: 50,
+  MAX: 400
+};
+
+export const CommentFormTextErrorMessage = {
+  MIN_CHARS: `The text must be more than ${LimitCommentLength.MIN} characters!`,
+  MAX_CHARS: `Text must be less than  ${LimitCommentLength.MAX} characters!`
+};
+
 export const COUNT_RELATED_CARDS = 4;
 export const COUNT_MAIN_PAGE_CARDS = 8;
 export const FILTER_DEFAULT = `All genres`;
