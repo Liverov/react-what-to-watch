@@ -1,6 +1,6 @@
 import {ActionCreator} from "./actions/actions";
 import {getNormalizeData} from "./utils/utils";
-import {AuthorizationStatus} from "./const";
+import {SetAuthStatus} from "./const";
 import {APIRoutes} from "./const";
 import {AppRoutes} from "./const";
 
@@ -34,18 +34,18 @@ export const fetchComments = (id) => (dispatch, _getState, api) => (
 
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(APIRoutes.LOGIN)
-    .then(() => dispatch(ActionCreator.requiredAuthorization(AuthorizationStatus.AUTH)))
+    .then(() => dispatch(ActionCreator.requiredAuthorization(SetAuthStatus.AUTH)))
     .catch(() => {})
 );
 
 export const login = ({login: email, password}) => (dispatch, _getState, api) => (
   api.post(APIRoutes.LOGIN, {email, password})
-    .then(() => dispatch(ActionCreator.requiredAuthorization(AuthorizationStatus.AUTH)))
+    .then(() => dispatch(ActionCreator.requiredAuthorization(SetAuthStatus.AUTH)))
     .then(() => dispatch(ActionCreator.redirectToRoute(AppRoutes.ROOT)))
 );
 
 export const logout = () => (dispatch, _getState, api) => (
   api.get(APIRoutes.LOGOUT)
-    .then(() => dispatch(ActionCreator.requiredAuthorization(AuthorizationStatus.NO_AUTH)))
+    .then(() => dispatch(ActionCreator.requiredAuthorization(SetAuthStatus.NO_AUTH)))
     .then(() => dispatch(ActionCreator.redirectToRoute(AppRoutes.ROOT)))
 );

@@ -1,5 +1,5 @@
 import {ActionType} from "../actions/actions";
-import {FILTER_DEFAULT, AuthorizationStatus} from "../const";
+import {FILTER_DEFAULT, SetAuthStatus} from "../const";
 
 const initialState = {
   genre: FILTER_DEFAULT,
@@ -19,7 +19,7 @@ const initialState = {
     commentsData: [],
     isCommentsLoaded: false
   },
-  authorizationStatus: AuthorizationStatus.NO_AUTH
+  authorizationStatus: SetAuthStatus.NO_AUTH
 };
 
 const reducer = (state = initialState, action) => {

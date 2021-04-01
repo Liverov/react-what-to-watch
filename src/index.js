@@ -14,10 +14,7 @@ import {checkAuth} from "./api-actions";
 const api = createAPI();
 const store = createStore(
     reducer,
-    composeWithDevTools(
-        applyMiddleware(thunk.withExtraArgument(api)),
-        applyMiddleware(redirect)
-    )
+    composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api), redirect))
 );
 
 store.dispatch(checkAuth());

@@ -1,4 +1,4 @@
-export const AuthorizationStatus = {
+export const SetAuthStatus = {
   AUTH: `AUTH`,
   NO_AUTH: `NO_AUTH`,
 };

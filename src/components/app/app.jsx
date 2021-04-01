@@ -37,9 +37,12 @@ const App = () => {
         <Route exact path={AppRoutes.MOVIE_SCREEN}>
           <MovieScreen />
         </Route>
-        <Route exact path={AppRoutes.ADD_REVIEW_SCREEN}>
-          <AddReviewScreen />
-        </Route>
+        <PrivateRoute
+          exact
+          path={AppRoutes.ADD_REVIEW_SCREEN}
+          render={() => <AddReviewScreen />}
+        >
+        </PrivateRoute>
         <Route exact path={AppRoutes.PLAYER_SCREEN}>
           <PlayerScreen />
         </Route>
