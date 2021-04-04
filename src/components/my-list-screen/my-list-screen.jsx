@@ -1,14 +1,20 @@
-import React from 'react';
-import {connect} from "react-redux";
-import {filmsPropType} from '../../types';
+import React, {useEffect} from 'react';
+import {useSelector, useDispatch} from "react-redux";
 
 import Header from '../../layout/header';
 import Avatar from '../avatar/avatar';
 import MovieCard from '../movie-card/movie-card';
 import Footer from '../../layout/footer';
+import {fetchFavorites} from "../../store/api-actions";
 
-const MyListScreen = ({films}) => {
-  const {filmsData} = films;
+const MyListScreen = () => {
+  const {favoriteData} = useSelector((state) => state.FAVORITE_DATA.favorite);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchFavorites());
+  }, []);
 
   return (
     <div className="user-page">
@@ -19,7 +25,7 @@ const MyListScreen = ({films}) => {
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
         <div className="catalog__movies-list">
-          {filmsData.map((film) => film.isFavorite ? <MovieCard key={film.id} film={film}/> : ``)}
+          {favoriteData.map((film) => film.isFavorite ? <MovieCard key={film.itemId} film={film}/> : ``)}
         </div>
       </section>
       <Footer/>
@@ -27,11 +33,4 @@ const MyListScreen = ({films}) => {
   );
 };
 
-MyListScreen.propTypes = {
-  films: filmsPropType
-};
-
-const mapStateToProps = ({films}) => ({films});
-
-export {MyListScreen};
-export default connect(mapStateToProps, null)(MyListScreen);
+export default MyListScreen;

@@ -1,34 +1,32 @@
 import React, {useEffect} from 'react';
-import {connect} from "react-redux";
-import {filmPropType, onLoadDataPropType} from '../../types';
-import {fetchPromoFilm} from "../../api-actions";
+import {useSelector, useDispatch} from "react-redux";
+import {fetchPromoFilm} from "../../store/api-actions";
 
 import Header from "../../layout/header";
 import CheckAuth from "../check-auth/check-auth";
 import MovieCardInfo from "../movie-card-info/movie-card-info";
 import Loader from "../loader/loader";
 
-const MainScreenCard = ({film, onLoadData}) => {
-  const {isFilmLoaded, isPromo, filmData} = film;
+const MainScreenCard = () => {
+  const {isFilmLoaded, isPromo, filmData} = useSelector((state) => state.FILM_DATA.film);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!isFilmLoaded || !isPromo) {
-      onLoadData();
+      dispatch(fetchPromoFilm());
     }
-  }, [isFilmLoaded]);
+  }, [!isFilmLoaded]);
 
   if (!isFilmLoaded) {
     return (
       <Loader />
     );
   }
-
   const {
     name,
     backgroundImage,
-    posterImage
+    posterImage,
   } = filmData;
-
 
   return (
     <section className="movie-card">
@@ -55,16 +53,4 @@ const MainScreenCard = ({film, onLoadData}) => {
   );
 };
 
-MainScreenCard.propTypes = {
-  film: filmPropType,
-  onLoadData: onLoadDataPropType
-};
-
-const mapStateToProps = ({film}) => ({film});
-const mapDispatchToProps = (dispatch) => ({
-  onLoadData() {
-    dispatch(fetchPromoFilm());
-  }
-});
-export {MainScreenCard};
-export default connect(mapStateToProps, mapDispatchToProps)(MainScreenCard);
+export default React.memo(MainScreenCard);

@@ -20,7 +20,7 @@ const Player = ({film, isPlaying, isMuted = true, isPreviewVideo = false}) => {
     }
     return () => {
       videoRef.current.load();
-      clearInterval(timerRef.current);
+      clearTimeout(timerRef.current);
       timerRef.current = null;
     };
 

@@ -1,16 +1,30 @@
 import React from 'react';
-import {useHistory} from "react-router-dom";
+import {useHistory} from 'react-router-dom';
 import {filmPropType, childrenPropType} from "../../types";
+import {useDispatch} from "react-redux";
+import {fetchSetFavorite} from "../../store/api-actions";
+import {ADD_TO_FAVORITE_STATUS, REMOVE_FROM_FAVORITE_STATUS} from "../../const";
 
 const MovieCardInfo = ({film, children}) => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+
   const {
     name,
     genre,
     released,
-    itemId
+    itemId,
+    isFavorite
   } = film;
 
-  const history = useHistory();
+  const onSetFavorite = () => {
+    if (isFavorite) {
+      dispatch(fetchSetFavorite(itemId, REMOVE_FROM_FAVORITE_STATUS));
+    } else {
+      dispatch(fetchSetFavorite(itemId, ADD_TO_FAVORITE_STATUS));
+    }
+  };
+
 
   return (
     <div className="movie-card__desc">
@@ -32,12 +46,12 @@ const MovieCardInfo = ({film, children}) => {
           <span>Play</span>
         </button>
         <button
-          onClick={() => history.push(`/mylist/`)}
+          onClick={onSetFavorite}
           className="btn btn--list movie-card__button"
           type="button"
         >
           <svg viewBox="0 0 19 20" width="19" height="20">
-            <use xlinkHref="#add"></use>
+            <use xlinkHref={isFavorite ? `#in-list` : `#add`}></use>
           </svg>
           <span>My list</span>
         </button>

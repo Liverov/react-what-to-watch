@@ -1,23 +1,31 @@
 import React, {useEffect} from 'react';
-import {connect} from 'react-redux';
-import {fetchFilms} from "../../api-actions";
-import {filmsPropType, onLoadDataPropType} from "../../types";
+import {useSelector, useDispatch} from 'react-redux';
+import {fetchFilms} from "../../store/api-actions";
 
 import Loader from '../loader/loader';
 import MainScreenCard from "./main-screen-card";
 import MovieList from '../movie-list/movie-list';
 import GenresList from "../genres-list/genres-list";
 import Footer from '../../layout/footer';
+import {changeGenre} from "../../store/actions";
+import {FILTER_DEFAULT} from "../../const";
 
 
-const MainScreen = ({films, onLoadData}) => {
-  const {isFilmsLoaded} = films;
+const MainScreen = () => {
+  const {isFilmsLoaded} = useSelector((state) => state.FILMS_DATA.films);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!isFilmsLoaded) {
-      onLoadData();
+      dispatch(fetchFilms());
     }
   }, [isFilmsLoaded]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(changeGenre(FILTER_DEFAULT));
+    };
+  }, []);
 
   if (!isFilmsLoaded) {
     return (
@@ -44,18 +52,5 @@ const MainScreen = ({films, onLoadData}) => {
   );
 };
 
-MainScreen.propTypes = {
-  films: filmsPropType,
-  onLoadData: onLoadDataPropType
-};
 
-const mapStateToProps = ({films}) => ({films});
-
-const mapDispatchToProps = (dispatch) => ({
-  onLoadData() {
-    dispatch(fetchFilms());
-  },
-});
-
-export {MainScreen};
-export default connect(mapStateToProps, mapDispatchToProps)(MainScreen);
+export default MainScreen;

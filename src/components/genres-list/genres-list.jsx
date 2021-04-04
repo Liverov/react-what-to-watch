@@ -1,12 +1,12 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {filmsPropType, changeGenrePropType} from "../../types";
+import {useSelector, useDispatch} from 'react-redux';
 import {FILTER_DEFAULT} from '../../const';
-import {ActionCreator} from "../../actions/actions";
+import {changeGenre} from "../../store/actions";
 
-const GenresList = ({films, changeGenre}) => {
-  const {filmsData} = films;
+const GenresList = () => {
+  const {filmsData} = useSelector((store) => store.FILMS_DATA.films);
   const originalGenres = [FILTER_DEFAULT, ...new Set(filmsData.map((film) => film.genre))];
+  const dispatch = useDispatch();
 
   return (
     <ul className="catalog__genres-list">
@@ -16,7 +16,7 @@ const GenresList = ({films, changeGenre}) => {
             <a
               href="#"
               className="catalog__genres-link"
-              onClick={() => item === FILTER_DEFAULT ? changeGenre(FILTER_DEFAULT) : changeGenre(item)}
+              onClick={() => item === FILTER_DEFAULT ? dispatch(changeGenre(FILTER_DEFAULT)) : dispatch(changeGenre(item))}
             >
               {item}
             </a>
@@ -27,18 +27,5 @@ const GenresList = ({films, changeGenre}) => {
   );
 };
 
-GenresList.propTypes = {
-  films: filmsPropType,
-  changeGenre: changeGenrePropType
-};
-
-const mapStateToProps = ({films, genre}) => ({films, genre});
-const mapDispatchToProps = (dispatch) => ({
-  changeGenre(item) {
-    dispatch(ActionCreator.changeGenre(item));
-  }
-});
-
-export {GenresList};
-export default connect(mapStateToProps, mapDispatchToProps)(GenresList);
+export default GenresList;
 
