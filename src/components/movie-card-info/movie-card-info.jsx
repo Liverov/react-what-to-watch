@@ -1,13 +1,19 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useHistory} from 'react-router-dom';
 import {filmPropType, childrenPropType} from "../../types";
 import {useDispatch} from "react-redux";
-import {fetchSetFavorite} from "../../store/api-actions";
+import {fetchPromoFilm, fetchSetFavorite} from "../../store/api-actions";
 import {ADD_TO_FAVORITE_STATUS, REMOVE_FROM_FAVORITE_STATUS} from "../../const";
 
-const MovieCardInfo = ({film, children}) => {
+const MovieCardInfo = ({film, children, isPromo}) => {
   const history = useHistory();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (isPromo) {
+      dispatch(fetchPromoFilm());
+    }
+  }, []);
 
   const {
     name,
