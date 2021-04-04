@@ -1,7 +1,8 @@
 import React, {useRef, useState, useEffect} from 'react';
 import {useHistory} from 'react-router-dom';
 import {useSelector} from 'react-redux';
-import {getRunTime} from '../../utils';
+import {getProgressTime, getRunTime, getSeconds} from '../../utils';
+import {DEFAULT_SECONDS} from "../../const";
 
 const PlayerScreen = () => {
   const history = useHistory();
@@ -15,7 +16,8 @@ const PlayerScreen = () => {
   const [play, setPlay] = useState({
     playing: false,
     time: getRunTime(runTime),
-    timeElapsed: 0
+    progressTime: 0,
+    secondsAgo: DEFAULT_SECONDS
   });
   const playerRef = useRef();
   const timerRef = useRef(null);
@@ -44,13 +46,18 @@ const PlayerScreen = () => {
   };
 
   const onPlayHandle = () => {
+    let seconds = DEFAULT_SECONDS;
     timerRef.current = setInterval(() => {
-      let minutes = Math.floor(playerRef.current.currentTime / 60);
+      let minutes = Math.floor(playerRef.current.currentTime / DEFAULT_SECONDS);
       let runTimeNow = runTime - minutes;
+
+      seconds = getSeconds(seconds);
+
       setPlay({
         ...play,
         time: getRunTime(runTimeNow),
-        timeElapsed: playerRef.current.currentTime / (runTime * 60) * 100
+        progressTime: getProgressTime(playerRef.current.currentTime, runTime),
+        secondsAgo: seconds
       });
     }, 1000);
   };
@@ -86,9 +93,9 @@ const PlayerScreen = () => {
               value={play.timeElapsed}
               max="100"
             ></progress>
-            <div className="player__toggler" style={{left: `${play.timeElapsed}%`}}>Toggler</div>
+            <div className="player__toggler" style={{left: `${play.progressTime}%`}}>Toggler</div>
           </div>
-          <div className="player__time-value">{play.time}</div>
+          <div className="player__time-value">{`${play.time}:${play.secondsAgo}`}</div>
         </div>
 
         <div className="player__controls-row">

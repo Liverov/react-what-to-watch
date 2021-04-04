@@ -1,4 +1,4 @@
-import {DefaultRating} from "./const";
+import {DEFAULT_SECONDS, DefaultRating} from "./const";
 
 export const getNormalizeDate = (date, options) => {
   const normalDate = new Date(date);
@@ -6,7 +6,56 @@ export const getNormalizeDate = (date, options) => {
 };
 
 export const getRunTime = (num) => {
-  return `${Math.floor(num / 60)}:${num % 60}`;
+  let hours = Math.floor(num / 60);
+  let minutes = Math.floor(num % 60);
+
+  if (hours < 10) {
+    hours = `0${hours}`;
+  }
+  if (minutes < 10) {
+    minutes = `0${minutes}`;
+  }
+
+  return `${hours}:${minutes}`;
+};
+
+export const getProgressTime = (currentTime, runTime) => {
+  return currentTime / (runTime * 60) * 100;
+};
+
+export const getSeconds = (seconds) => {
+  if (seconds > 0) {
+    seconds--;
+  } else {
+    seconds = DEFAULT_SECONDS;
+  }
+
+  if (seconds < 10) {
+    seconds = `0${seconds}`;
+  }
+
+  return seconds;
+};
+
+export const getCurrentTime = (currentTime) => {
+  let minutes = Math.floor(currentTime / 60);
+  let seconds = Math.floor(currentTime - minutes * 60);
+  let minuteValue;
+  let secondValue;
+
+  if (minutes < 10) {
+    minuteValue = `0` + minutes;
+  } else {
+    minuteValue = minutes;
+  }
+
+  if (seconds < 10) {
+    secondValue = `0` + seconds;
+  } else {
+    secondValue = seconds;
+  }
+
+  return minuteValue + `:` + secondValue;
 };
 
 export const getStarring = (starring) => {

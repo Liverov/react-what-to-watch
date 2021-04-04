@@ -25,6 +25,8 @@ export const DefaultRating = {
   }
 };
 
+export const DEFAULT_SECONDS = 60;
+
 export const ADD_TO_FAVORITE_STATUS = 1;
 export const REMOVE_FROM_FAVORITE_STATUS = 0;
 

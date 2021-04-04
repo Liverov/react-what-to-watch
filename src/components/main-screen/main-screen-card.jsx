@@ -46,7 +46,7 @@ const MainScreenCard = () => {
             <img src={posterImage} alt={`${name} poster`} width="218" height="327" />
           </div>
 
-          <MovieCardInfo film={filmData} isPromo={true}/>
+          <MovieCardInfo film={filmData} isPromo={isPromo}/>
         </div>
       </div>
     </section>
