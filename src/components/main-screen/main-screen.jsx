@@ -22,9 +22,7 @@ const MainScreen = () => {
   }, [isFilmsLoaded]);
 
   useEffect(() => {
-    return () => {
-      dispatch(changeGenre(FILTER_DEFAULT));
-    };
+    return () => dispatch(changeGenre(FILTER_DEFAULT));
   }, []);
 
   if (!isFilmsLoaded) {
