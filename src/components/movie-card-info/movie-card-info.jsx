@@ -1,22 +1,14 @@
-import React, {useState, useEffect} from 'react';
-import {useHistory, Redirect} from 'react-router-dom';
-import {useDispatch, useSelector} from "react-redux";
+import React from 'react';
+import {useHistory} from 'react-router-dom';
+import {useDispatch} from "react-redux";
 import {filmPropType, childrenPropType} from "../../types";
 import PropTypes from "prop-types";
-import {fetchPromoFilm, fetchSetFavorite} from "../../store/api-actions";
-import {AppRoutes, ADD_TO_FAVORITE_STATUS, REMOVE_FROM_FAVORITE_STATUS, SetAuthStatus} from "../../const";
+import {fetchSetFavorite} from "../../store/api-actions";
+import {ADD_TO_FAVORITE_STATUS, REMOVE_FROM_FAVORITE_STATUS} from "../../const";
 
-const MovieCardInfo = ({film, children, isPromo}) => {
+const MovieCardInfo = ({film, children}) => {
   const history = useHistory();
   const dispatch = useDispatch();
-
-  const {authorizationStatus} = useSelector((state) => state.USER);
-  const [route, setRoute] = useState(``);
-  useEffect(() => {
-    if (isPromo) {
-      dispatch(fetchPromoFilm());
-    }
-  }, []);
 
   const {
     name,
@@ -27,9 +19,6 @@ const MovieCardInfo = ({film, children, isPromo}) => {
   } = film;
 
   const onSetFavorite = () => {
-    if (authorizationStatus === SetAuthStatus.NO_AUTH) {
-      setRoute(AppRoutes.LOGIN);
-    }
     if (isFavorite) {
       dispatch(fetchSetFavorite(itemId, REMOVE_FROM_FAVORITE_STATUS));
     } else {
@@ -62,7 +51,6 @@ const MovieCardInfo = ({film, children, isPromo}) => {
           className="btn btn--list movie-card__button"
           type="button"
         >
-          <Redirect to={route} />
           <svg viewBox="0 0 19 20" width="19" height="20">
             <use xlinkHref={isFavorite ? `#in-list` : `#add`}></use>
           </svg>
