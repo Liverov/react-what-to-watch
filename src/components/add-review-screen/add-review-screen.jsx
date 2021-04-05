@@ -1,23 +1,20 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {connect} from "react-redux";
-
-import {filmPropType} from '../../types';
+import {useSelector} from "react-redux";
 
 import Header from '../../layout/header';
 import Avatar from '../avatar/avatar';
 import AddReviewForm from '../add-review-form/add-review-form';
 
 
-const AddReviewScreen = ({film}) => {
-  const {filmData} = film;
+const AddReviewScreen = () => {
+  const {filmData} = useSelector((state) => state.FILM_DATA.film);
   const {
     itemId,
     backgroundImage,
     name,
     posterImage,
   } = filmData;
-
 
   return (
     <section className="movie-card movie-card--full">
@@ -54,11 +51,4 @@ const AddReviewScreen = ({film}) => {
   );
 };
 
-AddReviewScreen.propTypes = {
-  film: filmPropType
-};
-
-const mapStateToProps = ({film}) => ({film});
-
-export {AddReviewScreen};
-export default connect(mapStateToProps, null)(AddReviewScreen);
+export default AddReviewScreen;

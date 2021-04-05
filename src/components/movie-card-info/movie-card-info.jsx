@@ -1,16 +1,21 @@
 import React from 'react';
-import {useHistory} from "react-router-dom";
+import {useHistory} from 'react-router-dom';
+import {useDispatch} from "react-redux";
 import {filmPropType, childrenPropType} from "../../types";
+import PropTypes from "prop-types";
+import {fetchSetFavorite} from "../../store/api-actions";
 
-const MovieCardInfo = ({film, children}) => {
+const MovieCardInfo = ({film, children, isPromo}) => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+
   const {
     name,
     genre,
     released,
-    itemId
+    itemId,
+    isFavorite
   } = film;
-
-  const history = useHistory();
 
   return (
     <div className="movie-card__desc">
@@ -32,12 +37,12 @@ const MovieCardInfo = ({film, children}) => {
           <span>Play</span>
         </button>
         <button
-          onClick={() => history.push(`/mylist/`)}
+          onClick={() => dispatch(fetchSetFavorite(itemId, !isFavorite, isPromo))}
           className="btn btn--list movie-card__button"
           type="button"
         >
           <svg viewBox="0 0 19 20" width="19" height="20">
-            <use xlinkHref="#add"></use>
+            <use xlinkHref={isFavorite ? `#in-list` : `#add`}></use>
           </svg>
           <span>My list</span>
         </button>
@@ -49,7 +54,8 @@ const MovieCardInfo = ({film, children}) => {
 
 MovieCardInfo.propTypes = {
   film: filmPropType,
-  children: childrenPropType
+  children: childrenPropType,
+  isPromo: PropTypes.bool
 };
 
 export default MovieCardInfo;

@@ -1,16 +1,17 @@
 import React from 'react';
-import {connect} from "react-redux";
-import {filmPropType} from '../../../types';
-import {getFilmRunTime, getStarring} from '../../../utils/utils';
+import {useSelector} from "react-redux";
+import {getRunTime, getStarring} from '../../../utils';
 
-const MovieScreenDetails = ({film}) => {
-  const {filmData: {
+const MovieScreenDetails = () => {
+  const {filmData} = useSelector((state) => state.FILM_DATA.film);
+
+  const {
     director,
     starring,
     runTime,
     genre,
     released,
-  }} = film;
+  } = filmData;
 
   return (
     <>
@@ -31,7 +32,7 @@ const MovieScreenDetails = ({film}) => {
         <div className="movie-card__text-col">
           <p className="movie-card__details-item">
             <strong className="movie-card__details-name">Run Time</strong>
-            <span className="movie-card__details-value">{getFilmRunTime(runTime)}</span>
+            <span className="movie-card__details-value">{getRunTime(runTime)}</span>
           </p>
           <p className="movie-card__details-item">
             <strong className="movie-card__details-name">Genre</strong>
@@ -47,11 +48,4 @@ const MovieScreenDetails = ({film}) => {
   );
 };
 
-MovieScreenDetails.propTypes = {
-  film: filmPropType
-};
-
-const mapStateToProps = ({film}) => ({film});
-
-export {MovieScreenDetails};
-export default connect(mapStateToProps, null)(MovieScreenDetails);
+export default MovieScreenDetails;

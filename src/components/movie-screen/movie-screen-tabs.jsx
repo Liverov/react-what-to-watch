@@ -32,6 +32,7 @@ const Tabs = () => {
                 className={`movie-nav__item ${tab === tabItem && `movie-nav__item--active`}`}
               >
                 <a
+                  style={{cursor: `pointer`}}
                   onClick={() => setTab(tabItem)}
                   className="movie-nav__link"
                 >

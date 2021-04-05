@@ -3,6 +3,34 @@ export const SetAuthStatus = {
   NO_AUTH: `NO_AUTH`,
 };
 
+export const DefaultRating = {
+  BAD: {
+    text: `Bad`,
+    maxCount: 3
+  },
+  NORMAL: {
+    text: `Normal`,
+    maxCount: 5,
+  },
+  GOOD: {
+    text: `Good`,
+    maxCount: 8,
+  },
+  VERY_GOOD: {
+    text: `Very good`,
+    maxCount: 10,
+  },
+  AWESOME: {
+    text: `Awesome`,
+  }
+};
+
+export const DEFAULT_SECONDS = 60;
+
+export const DEFAULT_MAX_LENGTH_COMMENT = 400;
+export const DEFAULT_MIN_LENGTH_COMMENT = 50;
+export const COMMENT_LENGTH_ERROR = `The text must be more than ${DEFAULT_MIN_LENGTH_COMMENT} characters!`;
+
 export const COUNT_RELATED_CARDS = 4;
 export const COUNT_MAIN_PAGE_CARDS = 8;
 export const FILTER_DEFAULT = `All genres`;
@@ -21,6 +49,7 @@ export const APIRoutes = {
   FILMS: `/films`,
   PROMO_FILM: `/films/promo`,
   COMMENTS: `/comments`,
+  FAVORITE: `/favorite`,
   LOGIN: `/login`,
   LOGOUT: `/logout`
 };

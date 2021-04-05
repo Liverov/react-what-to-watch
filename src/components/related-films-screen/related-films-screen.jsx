@@ -1,22 +1,24 @@
 import React, {useEffect} from "react";
-import {connect} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
 import {COUNT_RELATED_CARDS} from "../../const";
-import {filmsPropType, genrePropType, onLoadDataPropType} from "../../types";
-import {fetchFilms} from "../../api-actions";
+import {fetchFilms} from "../../store/api-actions";
 
 import MovieCard from "../movie-card/movie-card";
 import Loader from "../loader/loader";
 
 
-const RelatedFilmsScreen = ({films, genre, onLoadData}) => {
-  const {filmsData, isFilmsLoaded} = films;
-  const getRelatedFilms = filmsData.filter((relatedFilm) => genre === relatedFilm.genre).slice(0, COUNT_RELATED_CARDS);
+const RelatedFilmsScreen = () => {
+  const {filmsData, isFilmsLoaded} = useSelector((state) => state.FILMS_DATA.films);
+  const {filmData: {genre}} = useSelector((state) => state.FILM_DATA.film);
+
+  const getRelatedFilms = filmsData.filter((film) => film.genre === genre).slice(0, COUNT_RELATED_CARDS);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!isFilmsLoaded) {
-      onLoadData();
+      dispatch(fetchFilms());
     }
-  }, []);
+  }, [isFilmsLoaded]);
 
   if (!isFilmsLoaded) {
     return (
@@ -37,17 +39,4 @@ const RelatedFilmsScreen = ({films, genre, onLoadData}) => {
   );
 };
 
-RelatedFilmsScreen.propTypes = {
-  films: filmsPropType,
-  genre: genrePropType,
-  onLoadData: onLoadDataPropType
-};
-
-const mapStateToProps = ({films}) => ({films});
-const mapDispatchToProps = (dispatch) => ({
-  onLoadData() {
-    dispatch(fetchFilms());
-  }
-});
-export {RelatedFilmsScreen};
-export default connect(mapStateToProps, mapDispatchToProps)(RelatedFilmsScreen);
+export default RelatedFilmsScreen;

@@ -1,9 +1,8 @@
 import React, {useEffect} from 'react';
 import {useParams} from 'react-router-dom';
-import {connect} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
 
-import {authorizationStatusPropType, filmPropType, onLoadDataPropType} from '../../types';
-import {fetchFilm} from "../../api-actions";
+import {fetchFilm} from "../../store/api-actions";
 import {SetAuthStatus} from "../../const";
 
 import Header from '../../layout/header';
@@ -15,10 +14,12 @@ import Footer from '../../layout/footer';
 import Loader from "../loader/loader";
 import AddReviewButton from "../add-review-button/add-review-button";
 
-const MovieScreen = ({film, authorizationStatus, onLoadData}) => {
+const MovieScreen = () => {
   const {id} = useParams();
 
-  const {isFilmLoaded, filmData} = film;
+  const authorizationStatus = useSelector((state) => state.USER.authorizationStatus);
+  const {isFilmLoaded, filmData} = useSelector((state) => state.FILM_DATA.film);
+
   const {
     itemId,
     name,
@@ -27,9 +28,11 @@ const MovieScreen = ({film, authorizationStatus, onLoadData}) => {
     backgroundImage
   } = filmData;
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     if (!isFilmLoaded || itemId !== id) {
-      onLoadData(id);
+      dispatch(fetchFilm(id));
     }
   }, [id]);
 
@@ -54,7 +57,10 @@ const MovieScreen = ({film, authorizationStatus, onLoadData}) => {
           </Header>
 
           <div className="movie-card__wrap">
-            <MovieCardInfo film={filmData}>
+            <MovieCardInfo
+              film={filmData}
+              isPromo={false}
+            >
               {authorizationStatus === SetAuthStatus.AUTH ? <AddReviewButton itemId={itemId} /> : null}
             </MovieCardInfo>
           </div>
@@ -80,19 +86,4 @@ const MovieScreen = ({film, authorizationStatus, onLoadData}) => {
   );
 };
 
-MovieScreen.propTypes = {
-  film: filmPropType,
-  onLoadData: onLoadDataPropType,
-  authorizationStatus: authorizationStatusPropType
-};
-
-const mapStateToProps = ({film, authorizationStatus}) => ({film, authorizationStatus});
-
-const mapDispatchToProps = (dispatch) => ({
-  onLoadData(id) {
-    dispatch(fetchFilm(id));
-  }
-});
-
-export {MovieScreen};
-export default connect(mapStateToProps, mapDispatchToProps)(MovieScreen);
+export default MovieScreen;

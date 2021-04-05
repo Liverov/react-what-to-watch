@@ -1,21 +1,21 @@
 import React, {useEffect} from 'react';
-import {connect} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
 import {useParams} from "react-router-dom";
-
-import {getNormalizeDate} from "../../../utils/utils";
-import {filmPropType, commentsPropType, onLoadDataPropType} from '../../../types';
-import {fetchComments} from "../../../api-actions";
+import {getNormalizeDate} from "../../../utils";
+import {fetchComments} from "../../../store/api-actions";
 
 import Loader from "../../loader/loader";
 
-const MovieScreenReviews = ({film, comments, onLoadData}) => {
+const MovieScreenReviews = () => {
   const {id} = useParams();
-  const {filmData: {itemId}} = film;
-  const {commentsData, isCommentsLoaded} = comments;
+  const {filmData: {itemId}} = useSelector((state) => state.FILM_DATA.film);
+  const {commentsData, isCommentsLoaded} = useSelector((state) => state.COMMENTS_DATA.comments);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!isCommentsLoaded || itemId !== commentsData.itemId || id !== commentsData.itemId) {
-      onLoadData(itemId);
+      dispatch(fetchComments(itemId));
     }
   }, [itemId]);
 
@@ -50,17 +50,4 @@ const MovieScreenReviews = ({film, comments, onLoadData}) => {
   );
 };
 
-MovieScreenReviews.propTypes = {
-  film: filmPropType,
-  comments: commentsPropType,
-  onLoadData: onLoadDataPropType
-};
-
-const mapStateToProps = ({film, comments}) => ({film, comments});
-const mapDispatchToProps = (dispatch) => ({
-  onLoadData(id) {
-    dispatch(fetchComments(id));
-  }
-});
-export {MovieScreenReviews};
-export default connect(mapStateToProps, mapDispatchToProps)(MovieScreenReviews);
+export default MovieScreenReviews;

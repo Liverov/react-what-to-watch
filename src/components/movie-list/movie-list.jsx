@@ -1,17 +1,17 @@
 import React, {useState, useEffect} from 'react';
-import {connect} from "react-redux";
-import {filmsPropType, genrePropType} from '../../types';
+import {useSelector} from "react-redux";
 import {COUNT_MAIN_PAGE_CARDS} from '../../const';
-import {prepareFilmsByGenre} from '../../utils/utils';
-
 
 import MovieCard from '../movie-card/movie-card';
 import ShowMore from "../show-more/show-more";
+import {getFilmsByGenre} from "../../store/films-data/selectors";
 
 
-const MovieList = ({films, genre}) => {
+const MovieList = () => {
   const [count, setCount] = useState(COUNT_MAIN_PAGE_CARDS);
-  const {filmsData} = films;
+
+  const genre = useSelector((state) => state.GENRE);
+  const sortedFilmsByGenre = useSelector((state) => getFilmsByGenre(state));
 
   const countCardsHandler = () => {
     setCount(count + COUNT_MAIN_PAGE_CARDS);
@@ -23,30 +23,17 @@ const MovieList = ({films, genre}) => {
     };
   }, [genre]);
 
-  const mainPageList = filmsData.length > COUNT_MAIN_PAGE_CARDS ? filmsData.slice(0, count) : filmsData;
+  const mainMoviesList = sortedFilmsByGenre.length > COUNT_MAIN_PAGE_CARDS ? sortedFilmsByGenre.slice(0, count) : sortedFilmsByGenre;
 
   return (
     <>
       <div className="catalog__movies-list">
-        {mainPageList.map((film) => <MovieCard key={film.itemId} film={film} />)}
+        {mainMoviesList.map((film) => <MovieCard key={film.itemId} film={film} />)}
       </div>
 
-      {mainPageList.length !== filmsData.length && <ShowMore countCardsHandler={countCardsHandler} />}
+      {mainMoviesList.length !== sortedFilmsByGenre.length && <ShowMore countCardsHandler={countCardsHandler} />}
     </>
   );
 };
 
-MovieList.propTypes = {
-  films: filmsPropType,
-  genre: genrePropType
-};
-
-const mapStateToProps = ({films, genre}) => ({
-  films: {
-    filmsData: prepareFilmsByGenre({films, genre})
-  },
-  genre
-});
-
-export {MovieList};
-export default connect(mapStateToProps, null)(MovieList);
+export default MovieList;

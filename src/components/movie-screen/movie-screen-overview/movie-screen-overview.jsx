@@ -1,23 +1,24 @@
 import React from 'react';
-import {connect} from "react-redux";
-import {filmPropType} from '../../../types';
-import {getStarring} from '../../../utils/utils';
+import {useSelector} from "react-redux";
+import {getStarring, ratingToText} from '../../../utils';
 
-const MovieScreenOverview = ({film}) => {
-  const {filmData: {
+const MovieScreenOverview = () => {
+  const {filmData} = useSelector((state) => state.FILM_DATA.film);
+
+  const {
     rating,
     scoresCount,
     director,
     starring,
     description
-  }} = film;
+  } = filmData;
 
   return (
     <>
       <div className="movie-rating">
         <div className="movie-rating__score">{rating}</div>
         <p className="movie-rating__meta">
-          <span className="movie-rating__level">Very good</span>
+          <span className="movie-rating__level">{ratingToText(rating)}</span>
           <span className="movie-rating__count">{scoresCount} ratings</span>
         </p>
       </div>
@@ -34,11 +35,4 @@ const MovieScreenOverview = ({film}) => {
   );
 };
 
-MovieScreenOverview.propTypes = {
-  film: filmPropType
-};
-
-const mapStateToProps = ({film}) => ({film});
-
-export {MovieScreenOverview};
-export default connect(mapStateToProps, null)(MovieScreenOverview);
+export default MovieScreenOverview;
