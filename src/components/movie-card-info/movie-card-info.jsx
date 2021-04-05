@@ -1,14 +1,17 @@
-import React from 'react';
-import {useHistory} from 'react-router-dom';
-import {useDispatch} from "react-redux";
+import React, {useState} from 'react';
+import {Redirect, useHistory} from 'react-router-dom';
+import {useDispatch, useSelector} from "react-redux";
 import {filmPropType, childrenPropType} from "../../types";
 import PropTypes from "prop-types";
 import {fetchSetFavorite} from "../../store/api-actions";
+import {SetAuthStatus} from "../../const";
 
 const MovieCardInfo = ({film, children, isPromo}) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
+  const {authorizationStatus} = useSelector((state) => state.USER);
+  const [redirect, setRedirect] = useState(false);
   const {
     name,
     genre,
@@ -17,6 +20,16 @@ const MovieCardInfo = ({film, children, isPromo}) => {
     isFavorite
   } = film;
 
+  const setFetchFavorite = () => {
+    if (authorizationStatus === SetAuthStatus.NO_AUTH) {
+      setRedirect(true);
+    }
+    dispatch(fetchSetFavorite(itemId, !isFavorite, isPromo));
+  };
+
+  if (redirect) {
+    return <Redirect to={`/login`} />;
+  }
   return (
     <div className="movie-card__desc">
       <h2 className="movie-card__title">{name}</h2>
@@ -37,7 +50,7 @@ const MovieCardInfo = ({film, children, isPromo}) => {
           <span>Play</span>
         </button>
         <button
-          onClick={() => dispatch(fetchSetFavorite(itemId, !isFavorite, isPromo))}
+          onClick={setFetchFavorite}
           className="btn btn--list movie-card__button"
           type="button"
         >
