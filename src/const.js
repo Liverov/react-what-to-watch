@@ -27,9 +27,6 @@ export const DefaultRating = {
 
 export const DEFAULT_SECONDS = 60;
 
-export const ADD_TO_FAVORITE_STATUS = 1;
-export const REMOVE_FROM_FAVORITE_STATUS = 0;
-
 export const DEFAULT_MAX_LENGTH_COMMENT = 400;
 export const DEFAULT_MIN_LENGTH_COMMENT = 50;
 export const COMMENT_LENGTH_ERROR = `The text must be more than ${DEFAULT_MIN_LENGTH_COMMENT} characters!`;

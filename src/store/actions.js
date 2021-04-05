@@ -5,6 +5,7 @@ export const ActionType = {
   SET_PROMO_FILM: `data/setPromoFilm`,
   SET_COMMENTS: `data/setComments`,
   SET_FAVORITE: `data/setFavorite`,
+  UPDATE_FAVORITE: `data/updateFavorite`,
   REQUIRED_AUTHORIZATION: `user/requiredAuthorization`,
   REDIRECT_TO_ROUTE: `global/redirectToRoute`,
 };
@@ -37,6 +38,14 @@ export const setComments = (comments) => ({
 export const setFavorite = (favorite) => ({
   type: ActionType.SET_FAVORITE,
   payload: favorite
+});
+
+export const updateFavorite = ({status, isPromo}) => ({
+  type: ActionType.UPDATE_FAVORITE,
+  payload: {
+    status,
+    isPromo
+  }
 });
 
 export const requiredAuthorization = (status) => ({

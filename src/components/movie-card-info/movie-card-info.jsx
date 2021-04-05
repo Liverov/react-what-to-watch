@@ -4,9 +4,8 @@ import {useDispatch} from "react-redux";
 import {filmPropType, childrenPropType} from "../../types";
 import PropTypes from "prop-types";
 import {fetchSetFavorite} from "../../store/api-actions";
-import {ADD_TO_FAVORITE_STATUS, REMOVE_FROM_FAVORITE_STATUS} from "../../const";
 
-const MovieCardInfo = ({film, children}) => {
+const MovieCardInfo = ({film, children, isPromo}) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -17,15 +16,6 @@ const MovieCardInfo = ({film, children}) => {
     itemId,
     isFavorite
   } = film;
-
-  const onSetFavorite = () => {
-    if (isFavorite) {
-      dispatch(fetchSetFavorite(itemId, REMOVE_FROM_FAVORITE_STATUS));
-    } else {
-      dispatch(fetchSetFavorite(itemId, ADD_TO_FAVORITE_STATUS));
-    }
-  };
-
 
   return (
     <div className="movie-card__desc">
@@ -47,7 +37,7 @@ const MovieCardInfo = ({film, children}) => {
           <span>Play</span>
         </button>
         <button
-          onClick={onSetFavorite}
+          onClick={() => dispatch(fetchSetFavorite(itemId, !isFavorite, isPromo))}
           className="btn btn--list movie-card__button"
           type="button"
         >

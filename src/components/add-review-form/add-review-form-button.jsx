@@ -2,10 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import {DEFAULT_MIN_LENGTH_COMMENT} from "../../const";
 
-const AddReviewFormButton = ({commentLength, disabledStatus}) => {
-  let innerDisabledStatus = false;
+const AddReviewFormButton = ({commentLength, disabledFormStatus}) => {
+  let disabledButtonStatus = false;
   if (commentLength < DEFAULT_MIN_LENGTH_COMMENT) {
-    innerDisabledStatus = true;
+    disabledButtonStatus = true;
   }
 
   return (
@@ -14,7 +14,7 @@ const AddReviewFormButton = ({commentLength, disabledStatus}) => {
         className="add-review__btn"
         type="submit"
         name="submit-button"
-        disabled = {!innerDisabledStatus ? disabledStatus : innerDisabledStatus}
+        disabled = {!disabledButtonStatus ? disabledFormStatus : disabledButtonStatus}
       >
         Post
       </button>
@@ -24,7 +24,7 @@ const AddReviewFormButton = ({commentLength, disabledStatus}) => {
 
 AddReviewFormButton.propTypes = {
   commentLength: PropTypes.number,
-  disabledStatus: PropTypes.bool
+  disabledFormStatus: PropTypes.bool
 };
 
 export default AddReviewFormButton;

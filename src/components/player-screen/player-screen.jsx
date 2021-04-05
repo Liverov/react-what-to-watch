@@ -19,13 +19,15 @@ const PlayerScreen = () => {
     progressTime: 0,
     secondsAgo: DEFAULT_SECONDS
   });
+
   const playerRef = useRef();
   const timerRef = useRef(null);
 
   useEffect(() => {
     return () => {
-      playerRef.current.pause();
-      playerRef.current.currentTime = 0;
+      playerRef.current.load();
+      clearTimeout(timerRef.current);
+      timerRef.current = null;
     };
   }, []);
 

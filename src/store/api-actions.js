@@ -1,4 +1,12 @@
-import {setFilms, setFilm, setComments, requiredAuthorization, redirectToRoute, setFavorite} from "./actions";
+import {
+  setFilms,
+  setFilm,
+  setComments,
+  requiredAuthorization,
+  redirectToRoute,
+  setFavorite,
+  updateFavorite
+} from "./actions";
 import {getNormalizeData} from "../utils";
 import {SetAuthStatus} from "../const";
 import {APIRoutes} from "../const";
@@ -63,8 +71,12 @@ export const fetchFavorites = () => (dispatch, _getState, api) => (
     })
 );
 
-export const fetchSetFavorite = (itemId, status) => (dispatch, _getState, api) => (
-  api.post(`${APIRoutes.FAVORITE}/${itemId}/${status}`)
+export const fetchSetFavorite = (itemId, status, isPromo) => (dispatch, _getState, api) => (
+  api.post(`${APIRoutes.FAVORITE}/${itemId}/${Number(status)}`)
+    .then(() => {
+      status = Boolean(status);
+      dispatch(updateFavorite({status, isPromo}));
+    })
     .catch(() => {})
 );
 

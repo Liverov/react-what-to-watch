@@ -15,6 +15,19 @@ const filmData = (state = initialState, action) => {
         ...state,
         film: action.payload
       };
+    case ActionType.UPDATE_FAVORITE:
+      const {status, isPromo} = action.payload;
+      return ({
+        ...state,
+        film: {
+          filmData: {
+            ...state.film.filmData,
+            isFavorite: status
+          },
+          isFilmLoaded: true,
+          isPromo
+        }
+      });
     default:
       return state;
   }

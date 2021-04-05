@@ -57,7 +57,10 @@ const MovieScreen = () => {
           </Header>
 
           <div className="movie-card__wrap">
-            <MovieCardInfo film={filmData}>
+            <MovieCardInfo
+              film={filmData}
+              isPromo={false}
+            >
               {authorizationStatus === SetAuthStatus.AUTH ? <AddReviewButton itemId={itemId} /> : null}
             </MovieCardInfo>
           </div>

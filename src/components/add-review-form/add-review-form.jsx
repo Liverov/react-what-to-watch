@@ -10,7 +10,7 @@ import AddReviewFormButton from "./add-review-form-button";
 const AddReviewForm = () => {
   const {filmData: {itemId}} = useSelector((state) => state.FILM_DATA.film);
 
-  const [disabledStatus, setDisabledStatus] = useState(false);
+  const [disabledFormStatus, setDisabledFormStatus] = useState(false);
   const [comment, setComment] = useState(``);
   const [rating, setRating] = useState(10);
   const [error, setError] = useState(``);
@@ -34,7 +34,7 @@ const AddReviewForm = () => {
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
-    setDisabledStatus(true);
+    setDisabledFormStatus(true);
 
     dispatch(fetchSetComment({
       id: itemId,
@@ -42,7 +42,7 @@ const AddReviewForm = () => {
       comment
     }));
 
-    setDisabledStatus(false);
+    setDisabledFormStatus(false);
   };
 
   return (
@@ -52,7 +52,7 @@ const AddReviewForm = () => {
 
         <AddReviewFormRating
           onChange={handleSetRating}
-          disabledStatus={disabledStatus}
+          disabledFormStatus={disabledFormStatus}
         />
 
         <div className="add-review__text">
@@ -61,11 +61,11 @@ const AddReviewForm = () => {
             onChange = {handleSetComment}
             maxLength={DEFAULT_MAX_LENGTH_COMMENT}
             value={comment}
-            disabledStatus={disabledStatus}
+            disabledFormStatus={disabledFormStatus}
           />
 
           <AddReviewFormButton
-            disabledStatus={disabledStatus}
+            disabledFormStatus={disabledFormStatus}
             commentLength={comment.length}
           />
 
