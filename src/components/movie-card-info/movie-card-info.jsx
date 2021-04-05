@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {filmPropType, childrenPropType} from "../../types";
 import PropTypes from "prop-types";
 import {fetchSetFavorite} from "../../store/api-actions";
-import {SetAuthStatus} from "../../const";
+import {AppRoutes, SetAuthStatus} from "../../const";
 
 const MovieCardInfo = ({film, children, isPromo}) => {
   const history = useHistory();
@@ -28,7 +28,7 @@ const MovieCardInfo = ({film, children, isPromo}) => {
   };
 
   if (redirect) {
-    return <Redirect to={`/login`} />;
+    return <Redirect to={AppRoutes.LOGIN} />;
   }
   return (
     <div className="movie-card__desc">
