@@ -8,13 +8,19 @@ import {redirect} from "./store/middlewares/redirect";
 import reducer from './store/root-reducer';
 import {createAPI} from "./api";
 import {checkAuth} from "./store/api-actions";
-import {SetAuthStatus} from "./const";
-import {requiredAuthorization} from "./store/actions";
+import {AppRoutes, SetAuthStatus, SetErrors} from "./const";
+import {redirectToRoute, requiredAuthorization, setError} from "./store/actions";
 
 import App from './components/app/app';
 
 
-const api = createAPI(() => store.dispatch(requiredAuthorization(SetAuthStatus.NO_AUTH)));
+const api = createAPI(
+    () => store.dispatch(requiredAuthorization(SetAuthStatus.NO_AUTH)),
+    () => {
+      store.dispatch(setError(SetErrors.ERROR_CONNECTION));
+      store.dispatch(redirectToRoute(AppRoutes.ERROR_SERVER_SCREEN));
+    }
+);
 
 const store = createStore(
     reducer,

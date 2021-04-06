@@ -17,6 +17,7 @@ import MyListScreen from '../my-list-screen/my-list-screen';
 import MovieScreen from '../movie-screen/movie-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import Logout from "../logout/logout";
+import {ErrorConnection} from "../error_connection/error_connection";
 
 const App = () => {
   return (
@@ -48,6 +49,9 @@ const App = () => {
         </Route>
         <Route exact path={AppRoutes.LOGOUT}>
           <Logout />
+        </Route>
+        <Route exact path={AppRoutes.ERROR_SERVER_SCREEN}>
+          <ErrorConnection />
         </Route>
         <Route>
           <NotFoundScreen />
