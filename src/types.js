@@ -1,9 +1,4 @@
-import PropTypes, {shape} from 'prop-types';
-
-export const filmsPropType = PropTypes.shape({
-  data: PropTypes.array,
-  isLoaded: PropTypes.bool
-});
+import PropTypes from 'prop-types';
 
 export const filmPropType = PropTypes.shape({
   data: PropTypes.shape({
@@ -19,7 +14,7 @@ export const filmPropType = PropTypes.shape({
     rating: PropTypes.number,
     scoresCount: PropTypes.number,
     director: PropTypes.string,
-    starring: PropTypes.array,
+    starring: PropTypes.arrayOf(PropTypes.string),
     runTime: PropTypes.number,
     genre: PropTypes.string,
     released: PropTypes.number,
@@ -28,21 +23,5 @@ export const filmPropType = PropTypes.shape({
   isLoaded: PropTypes.bool
 });
 
-export const commentsPropType = PropTypes.shape({
-  id: PropTypes.number,
-  user: shape({
-    itemId: PropTypes.number,
-    name: PropTypes.string
-  }),
-  rating: PropTypes.number,
-  comment: PropTypes.string,
-  date: PropTypes.string
-});
-
-export const genrePropType = PropTypes.string;
-export const changeGenrePropType = PropTypes.func.isRequired;
 export const countCardsHandlerPropType = PropTypes.func.isRequired;
-export const onLoadDataPropType = PropTypes.func.isRequired;
-export const onSetCommentPropType = PropTypes.func.isRequired;
 export const childrenPropType = PropTypes.element;
-export const authorizationStatusPropType = PropTypes.string.isRequired;

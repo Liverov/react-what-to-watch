@@ -15,6 +15,7 @@ import App from './components/app/app';
 
 
 const api = createAPI(() => store.dispatch(requiredAuthorization(SetAuthStatus.NO_AUTH)));
+
 const store = createStore(
     reducer,
     composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api), redirect))

@@ -5,12 +5,14 @@ import {
   requiredAuthorization,
   redirectToRoute,
   setFavorite,
-  updateFavorite
+  updateFavorite,
+  setError,
+  blockCommentForm,
+  setErrorCommentForm,
+  setUser
 } from "./actions";
 import {getNormalizeData} from "../utils";
-import {SetAuthStatus} from "../const";
-import {APIRoutes} from "../const";
-import {AppRoutes} from "../const";
+import {APIRoutes, AppRoutes, HttpCode, SetAuthStatus, SetErrors} from "../const";
 
 export const fetchFilms = () => (dispatch, _getState, api) => (
   api.get(APIRoutes.FILMS)
@@ -54,12 +56,18 @@ export const fetchComments = (id) => (dispatch, _getState, api) => (
     })
 );
 
-export const fetchSetComment = ({id, rating, comment}) => (dispatch, _getState, api) => (
+export const fetchSetComment = ({id, rating, comment}) => (dispatch, _getState, api) => {
+  dispatch(blockCommentForm(true));
   api.post(`${APIRoutes.COMMENTS}/${id}`, {rating, comment})
-    .then(() => {
-      dispatch(redirectToRoute(`${APIRoutes.FILMS}/${id}`));
-    })
-);
+    .then((response) => {
+      if (response.status !== HttpCode.OK) {
+        dispatch(setErrorCommentForm());
+        dispatch(setError(SetErrors.ERROR_CONNECTION));
+      } else {
+        dispatch(blockCommentForm(false));
+      }
+    });
+};
 
 export const fetchFavorites = () => (dispatch, _getState, api) => (
   api.get(APIRoutes.FAVORITE)
@@ -82,19 +90,33 @@ export const fetchSetFavorite = (itemId, status, isPromo) => (dispatch, _getStat
 
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(APIRoutes.LOGIN)
+    .then(({data}) => {
+      dispatch(setUser(getNormalizeData(data)));
+    })
     .then(() => {
       dispatch(requiredAuthorization(SetAuthStatus.AUTH));
     })
-    .catch(() => {})
+    .then(() => {
+      dispatch(fetchFilms());
+    })
+    .catch(() => {
+      dispatch(fetchFilms());
+    })
 );
 
 export const login = ({login: email, password}) => (dispatch, _getState, api) => (
   api.post(APIRoutes.LOGIN, {email, password})
+    .then(({data}) => {
+      dispatch(setUser(getNormalizeData(data)));
+    })
     .then(() => {
       dispatch(requiredAuthorization(SetAuthStatus.AUTH));
     })
     .then(() => {
       dispatch(redirectToRoute(AppRoutes.ROOT));
+    })
+    .catch(() => {
+      dispatch(setError(SetErrors.LOGIN_ERROR));
     })
 );
 
@@ -107,3 +129,5 @@ export const logout = () => (dispatch, _getState, api) => (
       dispatch(redirectToRoute(AppRoutes.ROOT));
     })
 );
+
+

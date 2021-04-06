@@ -37,27 +37,6 @@ export const getSeconds = (seconds) => {
   return seconds;
 };
 
-export const getCurrentTime = (currentTime) => {
-  let minutes = Math.floor(currentTime / 60);
-  let seconds = Math.floor(currentTime - minutes * 60);
-  let minuteValue;
-  let secondValue;
-
-  if (minutes < 10) {
-    minuteValue = `0` + minutes;
-  } else {
-    minuteValue = minutes;
-  }
-
-  if (seconds < 10) {
-    secondValue = `0` + seconds;
-  } else {
-    secondValue = seconds;
-  }
-
-  return minuteValue + `:` + secondValue;
-};
-
 export const getStarring = (starring) => {
   return starring.map((item, index) => index !== starring.length - 1 ? `${item}, ` : item);
 };

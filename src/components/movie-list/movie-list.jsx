@@ -4,14 +4,14 @@ import {COUNT_MAIN_PAGE_CARDS} from '../../const';
 
 import MovieCard from '../movie-card/movie-card';
 import ShowMore from "../show-more/show-more";
-import {getFilmsByGenre} from "../../store/films-data/selectors";
+import {getFilmsByGenreSelector} from "../../store/films-data/selectors";
 
 
 const MovieList = () => {
   const [count, setCount] = useState(COUNT_MAIN_PAGE_CARDS);
 
   const genre = useSelector((state) => state.GENRE);
-  const sortedFilmsByGenre = useSelector((state) => getFilmsByGenre(state));
+  const sortedFilmsByGenre = useSelector((state) => getFilmsByGenreSelector(state));
 
   const countCardsHandler = () => {
     setCount(count + COUNT_MAIN_PAGE_CARDS);

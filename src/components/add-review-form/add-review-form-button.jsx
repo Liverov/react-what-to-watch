@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {DEFAULT_MIN_LENGTH_COMMENT} from "../../const";
+import {DefaultLengthComment} from "../../const";
 
-const AddReviewFormButton = ({commentLength, disabledFormStatus}) => {
-  let disabledButtonStatus = false;
-  if (commentLength < DEFAULT_MIN_LENGTH_COMMENT) {
-    disabledButtonStatus = true;
+const AddReviewFormButton = ({commentLength, blockCommentForm}) => {
+  let blockButtonStatus = false;
+  if (commentLength < DefaultLengthComment.MIN) {
+    blockButtonStatus = true;
   }
 
   return (
@@ -14,7 +14,7 @@ const AddReviewFormButton = ({commentLength, disabledFormStatus}) => {
         className="add-review__btn"
         type="submit"
         name="submit-button"
-        disabled = {!disabledButtonStatus ? disabledFormStatus : disabledButtonStatus}
+        disabled = {!blockButtonStatus ? blockCommentForm : blockButtonStatus}
       >
         Post
       </button>
@@ -24,7 +24,7 @@ const AddReviewFormButton = ({commentLength, disabledFormStatus}) => {
 
 AddReviewFormButton.propTypes = {
   commentLength: PropTypes.number,
-  disabledFormStatus: PropTypes.bool
+  blockCommentForm: PropTypes.bool
 };
 
 export default AddReviewFormButton;

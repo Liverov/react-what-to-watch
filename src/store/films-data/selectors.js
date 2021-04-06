@@ -1,14 +1,31 @@
 import {NameSpace} from "../root-reducer";
 import {createSelector} from "reselect";
-import {FILTER_DEFAULT} from "../../const";
+import {COUNT_RELATED_CARDS, FILTER_DEFAULT} from "../../const";
 
-const getFilmsData = (state) => state[NameSpace.FILMS_DATA].films;
-const getGenre = (state) => state[NameSpace.GENRE].genre;
+export const getFilmData = (state) => state[NameSpace.FILM_DATA].film;
+export const getFilmsData = (state) => state[NameSpace.FILMS_DATA].films;
+export const getGenre = (state) => state[NameSpace.GENRE].genre;
 
-export const getFilmsByGenre = createSelector(
+export const getFilmsByGenreSelector = createSelector(
     getFilmsData,
     getGenre,
     (films, genre) => {
       return genre !== FILTER_DEFAULT ? films.filmsData.filter((item) => item.genre === genre) : films.filmsData;
     }
 );
+
+export const getOriginalGenresSelector = createSelector(
+    getFilmsData,
+    (films) => {
+      return [FILTER_DEFAULT, ...new Set(films.filmsData.map((film) => film.genre))];
+    }
+);
+
+export const getRelatedFilmsSelector = createSelector(
+    getFilmData,
+    getFilmsData,
+    (film, films) => {
+      return films.filmsData.filter((item) => item.genre === film.filmData.genre).slice(0, COUNT_RELATED_CARDS);
+    }
+);
+

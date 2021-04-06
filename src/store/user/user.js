@@ -12,8 +12,15 @@ const user = (state = initialState, action) => {
         ...state,
         authorizationStatus: action.payload
       };
+    case ActionType.SET_USER:
+      return {
+        ...state,
+        user: action.payload
+      };
     default: return state;
   }
 };
 
 export {user};
+
+

@@ -5,6 +5,7 @@ import {filmsData} from "./films-data/films-data";
 import {filmData} from "./film-data/film-data";
 import {commentsData} from "./comments-data/comments-data";
 import {favoriteData} from "./favorite-data/favorite-data";
+import {error} from "./error/error";
 
 export const NameSpace = {
   GENRE: `GENRE`,
@@ -12,7 +13,8 @@ export const NameSpace = {
   FILMS_DATA: `FILMS_DATA`,
   FILM_DATA: `FILM_DATA`,
   COMMENTS_DATA: `COMMENTS_DATA`,
-  FAVORITE_DATA: `FAVORITE_DATA`
+  FAVORITE_DATA: `FAVORITE_DATA`,
+  ERROR: `ERROR`,
 };
 
 export default combineReducers({
@@ -21,5 +23,6 @@ export default combineReducers({
   [NameSpace.FILMS_DATA]: filmsData,
   [NameSpace.FILM_DATA]: filmData,
   [NameSpace.COMMENTS_DATA]: commentsData,
-  [NameSpace.FAVORITE_DATA]: favoriteData
+  [NameSpace.FAVORITE_DATA]: favoriteData,
+  [NameSpace.ERROR]: error
 });

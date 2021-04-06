@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 const ratingList = [...Array(10).keys()];
 
-const AddReviewFormRating = ({disabledFormStatus, onChange}) => {
+const AddReviewFormRating = ({blockCommentForm, onChange}) => {
   return (
     <div className="rating">
       <div className="rating__stars">
@@ -11,7 +11,7 @@ const AddReviewFormRating = ({disabledFormStatus, onChange}) => {
           ratingList.map((item) => {
             return (
               <Fragment key={item}>
-                <input onChange={onChange} className="rating__input" id={`star-${item + 1}`} type="radio" name="rating" value={item + 1} disabled={disabledFormStatus}/>
+                <input onChange={onChange} className="rating__input" id={`star-${item + 1}`} type="radio" name="rating" value={item + 1} disabled={blockCommentForm}/>
                 <label className="rating__label" htmlFor={`star-${item + 1}`}>Rating {item + 1}</label>
               </Fragment>
             );
@@ -24,7 +24,7 @@ const AddReviewFormRating = ({disabledFormStatus, onChange}) => {
 
 AddReviewFormRating.propTypes = {
   onChange: PropTypes.func,
-  disabledFormStatus: PropTypes.bool
+  blockCommentForm: PropTypes.bool
 };
 
 export default React.memo(AddReviewFormRating);

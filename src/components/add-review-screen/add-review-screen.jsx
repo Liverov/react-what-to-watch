@@ -1,20 +1,28 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
-import {useSelector} from "react-redux";
+import {Link, useParams} from 'react-router-dom';
+import {useDispatch, useSelector} from "react-redux";
 
 import Header from '../../layout/header';
 import Avatar from '../avatar/avatar';
 import AddReviewForm from '../add-review-form/add-review-form';
+import {fetchFilm} from "../../store/api-actions";
 
 
 const AddReviewScreen = () => {
-  const {filmData} = useSelector((state) => state.FILM_DATA.film);
+  const {id} = useParams();
+
+  const {filmData, isFilmLoaded} = useSelector((state) => state.FILM_DATA.film);
   const {
     itemId,
     backgroundImage,
     name,
-    posterImage,
+    posterImage
   } = filmData;
+
+  const dispatch = useDispatch();
+  if (!isFilmLoaded) {
+    dispatch(fetchFilm(id));
+  }
 
   return (
     <section className="movie-card movie-card--full">

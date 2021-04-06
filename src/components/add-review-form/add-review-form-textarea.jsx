@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const AddReviewFormTextarea = ({disabledFormStatus, maxLength, onChange}) => {
+const AddReviewFormTextarea = ({blockCommentForm, maxLength, onChange}) => {
   return (
     <textarea
       onFocus={(evt) => (evt.target.placeholder = ``)}
@@ -12,7 +12,7 @@ const AddReviewFormTextarea = ({disabledFormStatus, maxLength, onChange}) => {
       id="review-text"
       placeholder="Review text"
       required
-      disabled={disabledFormStatus}
+      disabled={blockCommentForm}
     >
     </textarea>
   );
@@ -20,7 +20,7 @@ const AddReviewFormTextarea = ({disabledFormStatus, maxLength, onChange}) => {
 
 AddReviewFormTextarea.propTypes = {
   onChange: PropTypes.func,
-  disabledFormStatus: PropTypes.bool,
+  blockCommentForm: PropTypes.bool,
   maxLength: PropTypes.number
 };
 

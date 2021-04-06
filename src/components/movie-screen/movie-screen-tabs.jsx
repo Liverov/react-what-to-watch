@@ -1,22 +1,17 @@
 import React, {useState} from 'react';
+import {MovieScreenTabs} from "../../const";
 
 import MovieScreenOverview from './movie-screen-overview/movie-screen-overview';
 import MovieScreenDetails from './movie-screen-details/movie-screen-details';
 import MovieScreenReviews from './movie-screen-reviews/movie-screen-reviews';
 
 const Tabs = () => {
-  const [tab, setTab] = useState(`Overview`);
-
-  const TABS = [
-    `Overview`,
-    `Details`,
-    `Reviews`
-  ];
+  const [tab, setTab] = useState(MovieScreenTabs.OVERVIEW);
 
   const getScreen = () => {
     switch (tab) {
-      case `Details`: return <MovieScreenDetails />;
-      case `Reviews`: return <MovieScreenReviews />;
+      case MovieScreenTabs.DETAILS: return <MovieScreenDetails />;
+      case MovieScreenTabs.REVIEWS: return <MovieScreenReviews />;
       default: return <MovieScreenOverview />;
     }
   };
@@ -26,7 +21,7 @@ const Tabs = () => {
       <nav className="movie-nav movie-card__nav">
         <ul className="movie-nav__list">
           {
-            TABS.map((tabItem) =>
+            Object.values(MovieScreenTabs).map((tabItem) =>
               <li
                 key={tabItem.toString()}
                 className={`movie-nav__item ${tab === tabItem && `movie-nav__item--active`}`}

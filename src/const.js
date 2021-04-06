@@ -3,6 +3,32 @@ export const SetAuthStatus = {
   NO_AUTH: `NO_AUTH`,
 };
 
+export const MovieScreenTabs = {
+  OVERVIEW: `Overview`,
+  DETAILS: `Details`,
+  REVIEWS: `Reviews`
+};
+
+export const HttpCode = {
+  UNAUTHORIZED: 401,
+  BAD_REQUEST: 400,
+  OK: 200,
+  SERVER_ERROR: 500
+};
+
+export const DefaultLengthComment = {
+  MIN: 50,
+  MAX: 400
+};
+
+export const SetErrors = {
+  LOGIN_ERROR: `Please enter a valid email address`,
+  PASSWORD_ERROR: `Please enter a valid password`,
+  COMBINATION_ERROR: `We can’t recognize this email and password combination. Please try again.`,
+  ERROR_CONNECTION: `SERVER IS NOT AVAILABLE`,
+  COMMENT_LENGTH_ERROR: `The text must be more than ${DefaultLengthComment.MIN} characters!`
+};
+
 export const DefaultRating = {
   BAD: {
     text: `Bad`,
@@ -25,12 +51,8 @@ export const DefaultRating = {
   }
 };
 
+export const REQUEST_TIMEOUT = 5000;
 export const DEFAULT_SECONDS = 60;
-
-export const DEFAULT_MAX_LENGTH_COMMENT = 400;
-export const DEFAULT_MIN_LENGTH_COMMENT = 50;
-export const COMMENT_LENGTH_ERROR = `The text must be more than ${DEFAULT_MIN_LENGTH_COMMENT} characters!`;
-
 export const COUNT_RELATED_CARDS = 4;
 export const COUNT_MAIN_PAGE_CARDS = 8;
 export const FILTER_DEFAULT = `All genres`;
@@ -39,10 +61,11 @@ export const AppRoutes = {
   ROOT: `/`,
   LOGIN: `/login`,
   LOGOUT: `/logout`,
-  MY_LIST: `/myList`,
+  MY_LIST: `/mylist`,
   MOVIE_SCREEN: `/films/:id`,
   ADD_REVIEW_SCREEN: `/films/:id/review`,
-  PLAYER_SCREEN: `/player/:id`
+  PLAYER_SCREEN: `/player/:id`,
+  ERROR_SERVER_SCREEN: `/errorserver`
 };
 
 export const APIRoutes = {
@@ -51,5 +74,6 @@ export const APIRoutes = {
   COMMENTS: `/comments`,
   FAVORITE: `/favorite`,
   LOGIN: `/login`,
-  LOGOUT: `/logout`
+  LOGOUT: `/logout`,
+  BACKEND_URL: `https://6.react.pages.academy/wtw`
 };

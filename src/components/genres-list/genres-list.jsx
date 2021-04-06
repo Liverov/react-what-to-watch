@@ -2,10 +2,11 @@ import React from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {FILTER_DEFAULT} from '../../const';
 import {changeGenre} from "../../store/actions";
+import {getOriginalGenresSelector} from "../../store/films-data/selectors";
 
 const GenresList = () => {
-  const {filmsData} = useSelector((store) => store.FILMS_DATA.films);
-  const originalGenres = [FILTER_DEFAULT, ...new Set(filmsData.map((film) => film.genre))];
+  const originalGenres = useSelector((state) => getOriginalGenresSelector(state));
+
   const dispatch = useDispatch();
 
   return (

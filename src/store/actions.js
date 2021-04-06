@@ -4,10 +4,14 @@ export const ActionType = {
   SET_FILM: `data/setFilm`,
   SET_PROMO_FILM: `data/setPromoFilm`,
   SET_COMMENTS: `data/setComments`,
+  BLOCK_COMMENT_FORM: `data/blockCommentForm`,
+  ERROR_COMMENT_FORM: `data/errorCommentForm`,
   SET_FAVORITE: `data/setFavorite`,
   UPDATE_FAVORITE: `data/updateFavorite`,
+  SET_USER: `user/setUser`,
   REQUIRED_AUTHORIZATION: `user/requiredAuthorization`,
   REDIRECT_TO_ROUTE: `global/redirectToRoute`,
+  SET_ERROR: `error/setError`,
 };
 
 
@@ -35,6 +39,15 @@ export const setComments = (comments) => ({
   payload: comments
 });
 
+export const blockCommentForm = (status) => ({
+  type: ActionType.BLOCK_COMMENT_FORM,
+  payload: status
+});
+
+export const setErrorCommentForm = () => ({
+  type: ActionType.ERROR_COMMENT_FORM
+});
+
 export const setFavorite = (favorite) => ({
   type: ActionType.SET_FAVORITE,
   payload: favorite
@@ -48,6 +61,11 @@ export const updateFavorite = ({status, isPromo}) => ({
   }
 });
 
+export const setUser = (user) => ({
+  type: ActionType.SET_USER,
+  payload: user
+});
+
 export const requiredAuthorization = (status) => ({
   type: ActionType.REQUIRED_AUTHORIZATION,
   payload: status,
@@ -56,5 +74,10 @@ export const requiredAuthorization = (status) => ({
 export const redirectToRoute = (url) => ({
   type: ActionType.REDIRECT_TO_ROUTE,
   payload: url,
+});
+
+export const setError = (error) => ({
+  type: ActionType.SET_ERROR,
+  payload: error
 });
 

@@ -1,7 +1,9 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
+import {useHistory} from "react-router-dom";
 import {fetchSetComment} from "../../store/api-actions";
-import {COMMENT_LENGTH_ERROR, DEFAULT_MIN_LENGTH_COMMENT, DEFAULT_MAX_LENGTH_COMMENT} from "../../const";
+import {SetErrors, DefaultLengthComment, APIRoutes} from "../../const";
+import {setError} from "../../store/actions";
 
 import AddReviewFormTextarea from "./add-review-form-textarea";
 import AddReviewFormRating from "./add-review-from-rating";
@@ -9,13 +11,15 @@ import AddReviewFormButton from "./add-review-form-button";
 
 const AddReviewForm = () => {
   const {filmData: {itemId}} = useSelector((state) => state.FILM_DATA.film);
+  const {blockCommentForm, isErrorCommentForm} = useSelector((state) => state.COMMENTS_DATA.comments);
+  const {error} = useSelector((state) => state.ERROR);
 
-  const [disabledFormStatus, setDisabledFormStatus] = useState(false);
   const [comment, setComment] = useState(``);
   const [rating, setRating] = useState(10);
-  const [error, setError] = useState(``);
+  const [submit, setSubmit] = useState(false);
 
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const handleSetRating = useCallback(({target}) => {
     setRating(target.value);
@@ -24,26 +28,26 @@ const AddReviewForm = () => {
   const handleSetComment = ({target}) => {
     setComment(target.value);
 
-    if (comment.length < DEFAULT_MIN_LENGTH_COMMENT) {
-      setError(COMMENT_LENGTH_ERROR);
-    } else {
-      setError(``);
+    if (comment.length < DefaultLengthComment.MIN) {
+      dispatch(setError(SetErrors.COMMENT_LENGTH_ERROR));
     }
   };
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-
-    setDisabledFormStatus(true);
-
+    setSubmit(true);
     dispatch(fetchSetComment({
       id: itemId,
       rating,
       comment
     }));
-
-    setDisabledFormStatus(false);
   };
+
+  useEffect(() => {
+    if (submit && !blockCommentForm && !isErrorCommentForm) {
+      history.push(`${APIRoutes.FILMS}/${itemId}`);
+    }
+  }, [blockCommentForm, isErrorCommentForm]);
 
   return (
     <div className="add-review">
@@ -52,20 +56,20 @@ const AddReviewForm = () => {
 
         <AddReviewFormRating
           onChange={handleSetRating}
-          disabledFormStatus={disabledFormStatus}
+          blockCommentForm={blockCommentForm}
         />
 
         <div className="add-review__text">
 
           <AddReviewFormTextarea
             onChange = {handleSetComment}
-            maxLength={DEFAULT_MAX_LENGTH_COMMENT}
+            maxLength={DefaultLengthComment.MAX}
             value={comment}
-            disabledFormStatus={disabledFormStatus}
+            blockCommentForm={blockCommentForm}
           />
 
           <AddReviewFormButton
-            disabledFormStatus={disabledFormStatus}
+            blockCommentForm={blockCommentForm}
             commentLength={comment.length}
           />
 
