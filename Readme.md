@@ -1,6 +1,8 @@
 # Кинопортал «Что посмотреть»
 * Антон Ливеров.
 
+# Демо
+https://liverov.github.io/what-to-whatch-demo/
 
 ### Стек
 
